@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Пример</title>
+    <!--<script src="http://wac.edgecastcdn.net/800952/400b1e1c-5766-45fe-a132-1e98616c551e-api/gsrs?g=91cf6895-e0e5-4cca-99a3-4f7ff496f310&is=trlsru"></script> -->
+    <script type="text/javascript" src="http://maps.api.2gis.ru/1.0"></script>
+    <script type="text/javascript" src="js/example.js"></script>
+
+
+</head>
+<body>
+Мышкой кликая по карте, маркером положение свое отметишь ты
+    <div id="myMapId" style="width:800px; height:550px"></div>
+
+    <input type="button" onclick="javascript:findInAround()" value = "Поиск памятников в радиусе 250 м. от заданной точки"></input>
+    <input type="button" onclick="javascript:myMap.markers.removeAll(); myMap.geometries.removeAll()" value = "Очистить карту"></input>
+    <input type="button" onclick="javascript:findNearStreet()" value = "Найти ближайшую улицу"></input>
+    <input type="button" onclick="javascript:paintNearStreet()" value = "Отобразить улицы поблизости"></input>
+
+</body>
+</html>
