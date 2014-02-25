@@ -9,6 +9,7 @@ Http          = require 'http'
 
 # app requie
 Socket = require './app/socket'
+Web    = require './app/web'
 
 config = require './config'
 logger = require './app/logger'
@@ -31,10 +32,17 @@ logger = require './app/logger'
 # setup express
 @server.express.use ExpressCoffee { path: __dirname + config.get('web:public') }
 @server.express.use '/css', ExpressLess(__dirname + config.get('web:less'), { compress: process.env.PRODUCTION })
+
 @server.express.use Express.errorHandler()
+@server.express.use Express.bodyParser()
+@server.express.use Express.methodOverride()
 @server.express.use Express.static(__dirname + config.get('web:public'))
 
 @server.express.set 'view engine', 'jade'
+@server.express.set 'views', __dirname + config.get('web:views')
+@server.express.locals.basedir = @server.express.get 'views'
+
+web = new Web(@server)
 
 # start
 @server.http.listen config.get('server:port')

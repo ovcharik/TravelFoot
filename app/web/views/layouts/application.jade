@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    block stylesheets
+      link(rel="stylesheet", href="/css/bootstrap.min.css")
+      link(rel="stylesheet", href="/css/bootstrap-theme.min.css")
+    
+    block javascripts
+      script(src="/javascripts/jquery.min.js")
+      script(src="/javascripts/bootstrap.min.js")
+    
+    title= title || (controller + '/' + action)
+    
+    block head
+  
+  body
+    block content
