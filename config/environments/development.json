@@ -1,0 +1,15 @@
+{
+  "server": {
+    "port": "3000"
+  },
+  
+  "web": {
+    "public": "/public",
+    "less":   "/public/less"
+  },
+  
+  "logs": {
+    "path"   : "logs/development.log",
+    "console": true
+  }
+}

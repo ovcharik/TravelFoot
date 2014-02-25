@@ -1,0 +1,20 @@
+{
+  "name": "TravelFoot",
+  "version": "0.0.1",
+  
+  "dependencies": {
+    "coffee-script": ">=1.6.x",
+    "socket.io": ">=0.9.x",
+    "nconf": ">=0.6.x",
+    "express": ">=3.x",
+    "express-coffee": ">=0.0.8",
+    "express-less": ">=0.0.2",
+    "jade": "*",
+    "underscore": ">=1.5.x",
+    "winston": ">=0.7.x"
+  },
+  
+  "scripts": {
+    "start": "coffee index.coffee"
+  }
+}
