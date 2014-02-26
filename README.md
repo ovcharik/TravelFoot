@@ -30,6 +30,7 @@
   - [Exspress](http://expressjs.com/api.html) - библиотека для работы с запросами пользователя и формирования ответа
   - [Mongoose](http://mongoosejs.com/) - работа с бд
   - [CoffeeScript](http://coffeescript.org/) - диалект js
+  - [Jade](http://jade-lang.com/) - темплейты для представлений
 
 * Frontend
   - [Bootstrap](http://getbootstrap.com/) - типовые элементы интерфейса приложения
