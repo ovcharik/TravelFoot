@@ -1,0 +1,22 @@
+extends /layouts/application
+
+block append content
+  .col-sm-6.col-sm-offset-3
+    .panel.panel-primary
+      .panel-heading
+        h3.panel-title
+          | Sign up
+      .panel-body
+        form#signup-form(role="form", action="/signup", method="POST")
+          .alert.alert-danger(style="display:none")
+            ul.errors
+          .form-group
+            label(for="sign-up-email") Email
+            input#sign-up-email.form-control(type="email", name="user[email]", placeholder="Email")
+          .form-group
+            label(for="sign-up-password") Password
+            input#sign-up-password.form-control(type="password", name="user[password]", placeholder="Password")
+          .form-group
+            label(for="sign-up-confirm") Password confirm
+            input#sign-up-confirm.form-control(type="password", name="user[confirm]", placeholder="Password confirm")
+          button.btn.btn-default(type="submit") Sign up

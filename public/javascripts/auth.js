@@ -1,8 +1,10 @@
 
   $(function() {
-    return $('#signin-form').submit(function() {
-      var $form;
+    $('#signin-form').submit(function() {
+      var $button, $form;
       $form = $(this);
+      $button = $('button[type=submit]', $form);
+      $button.prop('disabled', true);
       $.ajax({
         method: $form.attr('method'),
         url: $form.attr('action'),
@@ -10,10 +12,47 @@
         dataFormat: 'JSON',
         success: function(data) {
           if (data.success) {
-            return window.location.reload();
+            window.location.reload();
           } else {
-            return $('.error', $form).slideDown();
+            $('.error', $form).slideDown();
           }
+          return $button.prop('disabled', false);
+        },
+        error: function() {
+          return $button.prop('disabled', false);
+        }
+      });
+      return false;
+    });
+    return $('#signup-form').submit(function() {
+      var $button, $form;
+      $form = $(this);
+      $button = $('button[type=submit]', $form);
+      $button.prop('disabled', true);
+      $.ajax({
+        method: $form.attr('method'),
+        url: $form.attr('action'),
+        data: $form.serialize(),
+        dataFormat: 'JSON',
+        success: function(data) {
+          var $alert, $errors, error, _i, _len, _ref;
+          if (data.success) {
+            window.location.pathname = '/';
+          } else {
+            $alert = $('.alert', $form);
+            $errors = $('.errors', $form);
+            $errors.html('');
+            _ref = data.errors;
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              error = _ref[_i];
+              $errors.append("<li><b>" + error[0] + "</b> " + error[1] + "</li>");
+            }
+            $alert.slideDown();
+          }
+          return $button.prop('disabled', false);
+        },
+        error: function() {
+          return $button.prop('disabled', false);
         }
       });
       return false;

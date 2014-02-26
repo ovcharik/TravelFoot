@@ -3,7 +3,7 @@ ApplicationController = require './application'
 class HomeController extends ApplicationController
   
   index: ->
-    @title = "Главная"
+    @title = "Home"
     return true
 
 module.exports = HomeController

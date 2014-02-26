@@ -15,5 +15,16 @@
     "method"    : "get",
     "controller": "sessions",
     "action"    : "destroy"
-  }
+  },
+  "/signup": [
+    {
+      "method"    : "get",
+      "controller": "registrations",
+      "action"    : "index"
+    }, {
+      "method"    : "post",
+      "controller": "registrations",
+      "action"    : "create"
+    }
+  ]
 }
