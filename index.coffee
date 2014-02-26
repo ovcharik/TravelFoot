@@ -4,7 +4,7 @@ global._ = require 'underscore'
 SocketIO      = require 'socket.io'
 Express       = require 'express'
 ExpressCoffee = require 'express-coffee'
-ExpressLess   = require 'express-less'
+ExpressLess   = require 'less-middleware'
 Http          = require 'http'
 
 # app requie
@@ -30,8 +30,15 @@ logger = require './app/logger'
   new App(@server, socket)
 
 # setup express
-@server.express.use ExpressCoffee { path: __dirname + config.get('web:public') }
-@server.express.use '/css', ExpressLess(__dirname + config.get('web:less'), { compress: process.env.PRODUCTION })
+@server.express.use ExpressCoffee {
+  path: __dirname + config.get('web:public')
+}
+@server.express.use ExpressLess {
+  src : config.get('web:less')
+  dest: config.get('web:css')
+  root: __dirname + config.get('web:public')
+  compress: process.env.PRODUCTION
+}
 
 @server.express.use Express.errorHandler()
 @server.express.use Express.bodyParser()

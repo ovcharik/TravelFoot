@@ -5,7 +5,8 @@
   
   "web": {
     "public": "/public",
-    "less"  : "/public/less",
+    "less"  : "/less",
+    "css"   : "/css",
     "views" : "/app/web/views"
   },
   
