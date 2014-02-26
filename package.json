@@ -11,7 +11,9 @@
     "less-middleware": ">=0.1.15",
     "jade": "*",
     "underscore": ">=1.5.x",
-    "winston": ">=0.7.x"
+    "winston": ">=0.7.x",
+    "mongoose": ">=3.6.x",
+    "bcrypt-nodejs": ">=0.0.x"
   },
   
   "scripts": {

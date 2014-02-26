@@ -6,9 +6,11 @@ class HomeController extends ApplicationController
   
   index: ->
     @title = "Главная"
+    return true
   
   # filters
   test: ->
     console.log 'test'
+    return true
 
 module.exports = HomeController

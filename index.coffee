@@ -1,5 +1,3 @@
-global._ = require 'underscore'
-
 # dependencies
 SocketIO      = require 'socket.io'
 Express       = require 'express'
@@ -7,18 +5,24 @@ ExpressCoffee = require 'express-coffee'
 ExpressLess   = require 'less-middleware'
 Http          = require 'http'
 
+libs = require './libs'
+
 # app requie
-Socket = require './app/socket'
-Web    = require './app/web'
+Socket   = require './app/socket'
+Web      = require './app/web'
+Database = require './app/database'
 
 config = require './config'
 logger = require './app/logger'
 
 # configuire server
 @server =
-  express: Express()
-  config:  config
-  logger:  logger(config.get('logs:path'), config.get('logs:console'))
+  express:  Express()
+  config:   config
+  logger:   logger(config.get('logs:path'), config.get('logs:console'))
+
+# create db
+@server.database = new Database @server
 
 # create http
 @server.http = Http.createServer(@server.express)

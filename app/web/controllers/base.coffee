@@ -27,11 +27,20 @@ class BaseController
     before  = filters.before
     after   = filters.after
     
-    _applyFilters.apply(@, [before])
-    @[@action].apply(@)
-    @render() if not @finished()
-    _applyFilters.apply(@, [after])
+    @stack = []
+    
+    _stackFilters.apply(@, [before, @stack])
+    @stack.push @[@action].bind(@)
+    @stack.push @defaultRender.bind(@)
+    _stackFilters.apply(@, [after, @stack])
+    
+    @next()
     @
+  
+  defaultRender: ->
+    if not @finished()
+      @render()
+    return true
   
   render: (value, data) ->
     if (typeof(value) == "object")
@@ -44,6 +53,12 @@ class BaseController
   
   finished: ->
     @response.finished
+  
+  next: ->
+    return if not @stack or @stack.length == 0
+    f = @stack.shift()
+    if f()
+      @next()
   
   # private
   _addFilter = (filters, name, options) ->
@@ -75,6 +90,14 @@ class BaseController
       exec ||= value.except and not _.contains(value.except, @action)
       exec ||= value.only   and     _.contains(value.only, @action)
       @[value.method].apply(@) if exec
+    @
+  
+  _stackFilters = (filters, stack) ->
+    for value in filters
+      exec = not (value.except or value.only)
+      exec ||= value.except and not _.contains(value.except, @action)
+      exec ||= value.only   and     _.contains(value.only, @action)
+      stack.push @[value.method].bind(@) if exec
     @
   
   _getControllerName = ->

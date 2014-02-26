@@ -13,5 +13,10 @@
   "logs": {
     "path"   : "logs/development.log",
     "console": true
+  },
+  
+  "database": {
+    "host"    : "localhost",
+    "database": "travel_foot"
   }
 }
