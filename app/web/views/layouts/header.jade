@@ -1,0 +1,31 @@
+nav.navbar.navbar-default(role="navigation")
+  .container
+    .navbar-header
+      button.navbar-toggle(type="button", data-toggle="collapse", data-target="#navbar")
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand(href="javascript:void(0)")
+        i.fa.fa-lg.fa-globe
+        | &nbsp;TravelFoot
+    #navbar.collapse.navbar-collapse
+      ul.nav.navbar-nav.navbar-right
+        li.dropdown
+          button.btn.btn-default.navbar-btn.dropdown-toggle(type="button", data-toggle="dropdown")
+            | Sign in&nbsp;
+            span.caret
+          .dropdown-menu(style="min-width:250px; padding: 15px")
+            form(role="form")
+              .form-group
+                input.form-control(type="email", placeholder="Email", name="user[email]")
+              .form-group
+                input.form-control(type="password", placeholder="Password", name="user[password]")
+              .checkbox
+                label
+                  input(type="checkbox", name="user[remember]")
+                  | Remember me
+              button.btn.btn-primary.btn-block(type="submit") Sign in
+              .divider
+              a(href="javascript:void(0)")
+                | Sing up
