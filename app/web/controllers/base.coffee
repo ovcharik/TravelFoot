@@ -1,4 +1,4 @@
-class BaseController
+class BaseController extends Module
   # class methods
   @beforeFilter: (name, options) ->
     _addFilter.apply @, ['before', name, options]

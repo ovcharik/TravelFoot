@@ -3,8 +3,8 @@ controllers = require './controllers'
 
 class Web
   
-  constructor: (server) ->
-    @server = server
+  constructor: (@server) ->
+    @helpers = @server.helpers
     @router = new Router(@server.express, controllers)
     @router.configure()
   

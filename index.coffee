@@ -6,20 +6,22 @@ ExpressLess   = require 'less-middleware'
 Http          = require 'http'
 
 libs = require './libs'
+helpers = require './app/helpers'
 
 # app requie
 Socket   = require './app/socket'
 Web      = require './app/web'
 Database = require './app/database'
 
-config = require './config'
-logger = require './app/logger'
+config  = require './config'
+logger  = require './app/logger'
 
 # configuire server
 @server =
   express:  Express()
   config:   config
   logger:   logger(config.get('logs:path'), config.get('logs:console'))
+  helpers:  helpers
 
 # create db
 @server.database = new Database @server
@@ -47,6 +49,7 @@ logger = require './app/logger'
 @server.express.use Express.errorHandler()
 @server.express.use Express.bodyParser()
 @server.express.use Express.methodOverride()
+@server.express.use Express.cookieParser()
 @server.express.use Express.static(__dirname + config.get('web:public'))
 
 @server.express.set 'view engine', 'jade'

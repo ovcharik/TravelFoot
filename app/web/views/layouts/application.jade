@@ -1,13 +1,14 @@
 doctype html
 html
   head
+    link(rel="stylesheet", href="/css/bootstrap/bootstrap.css")
+    link(rel="stylesheet", href="/css/font-awesome/font-awesome.css")
     block stylesheets
-      link(rel="stylesheet", href="/css/bootstrap/bootstrap.css")
-      link(rel="stylesheet", href="/css/font-awesome/font-awesome.css")
     
+    script(src="/javascripts/jquery.min.js")
+    script(src="/javascripts/bootstrap.min.js")
+    script(src="/javascripts/auth.js")
     block javascripts
-      script(src="/javascripts/jquery.min.js")
-      script(src="/javascripts/bootstrap.min.js")
     
     title= title || (controller + '/' + action)
     

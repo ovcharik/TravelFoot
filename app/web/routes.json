@@ -3,5 +3,17 @@
     "method"    : "get",
     "controller": "home",
     "action"    : "index"
+  },
+  
+  
+  "/signin": {
+    "method"    : "post",
+    "controller": "sessions",
+    "action"    : "create"
+  },
+  "/signout": {
+    "method"    : "get",
+    "controller": "sessions",
+    "action"    : "destroy"
   }
 }

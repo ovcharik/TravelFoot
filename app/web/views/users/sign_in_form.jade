@@ -1,0 +1,20 @@
+li.dropdown
+  button.btn.btn-default.navbar-btn.dropdown-toggle(type="button", data-toggle="dropdown")
+    | Sign in&nbsp;
+    span.caret
+  .dropdown-menu(style="min-width:250px; padding: 15px")
+    form#signin-form(role="form", action="/signin", method="POST")
+      .alert.alert-danger.error(style="display:none")
+        | Wrong email or password
+      .form-group
+        input.form-control(type="email", placeholder="Email", name="user[email]")
+      .form-group
+        input.form-control(type="password", placeholder="Password", name="user[password]")
+      .checkbox
+        label
+          input(type="checkbox", name="user[remember]")
+          | Remember me
+      button.btn.btn-primary.btn-block(type="submit") Sign in
+      .divider
+      a(href="javascript:void(0)")
+        | Sing up

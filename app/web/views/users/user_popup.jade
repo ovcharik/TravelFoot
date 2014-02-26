@@ -1,0 +1,8 @@
+li.dropdown
+  button.btn.btn-default.navbar-btn.dropdown-toggle(type="button", data-toggle="dropdown")
+    = currentUser.email
+    | &nbsp;
+    span.caret
+  .dropdown-menu(style="min-width:250px; padding: 15px")
+    a.btn.btn-primary.btn-block(href="/signout")
+      | Sing out
