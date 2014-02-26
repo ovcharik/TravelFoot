@@ -1,15 +1,15 @@
 var myMap;
 var observers=[];
 var marker;
-	//Создание карты в myMapId       
-	// Создаем обработчик загрузки страницы:
+	//РЎРѕР·РґР°РЅРёРµ РєР°СЂС‚С‹ РІ myMapId       
+	// РЎРѕР·РґР°РµРј РѕР±СЂР°Р±РѕС‚С‡РёРє Р·Р°РіСЂСѓР·РєРё СЃС‚СЂР°РЅРёС†С‹:
 
         DG.autoload(function() {
-            // Создаем объект карты, связанный с контейнером:
+            // РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ РєР°СЂС‚С‹, СЃРІСЏР·Р°РЅРЅС‹Р№ СЃ РєРѕРЅС‚РµР№РЅРµСЂРѕРј:
             myMap = new DG.Map('myMapId');
-            // Устанавливаем центр карты, и коэффициент масштабирования:
+            // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С†РµРЅС‚СЂ РєР°СЂС‚С‹, Рё РєРѕСЌС„С„РёС†РёРµРЅС‚ РјР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёСЏ:
             myMap.setCenter(new DG.GeoPoint(61.407778,55.160556), 15);
-            // Добавляем элемент управления коэффициентом масштабирования:
+            // Р”РѕР±Р°РІР»СЏРµРј СЌР»РµРјРµРЅС‚ СѓРїСЂР°РІР»РµРЅРёСЏ РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРј РјР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёСЏ:
             myMap.controls.add(new DG.Controls.Zoom());
 	    myMap.geoclicker.disable();
 	    marker = createMarker();
@@ -19,10 +19,10 @@ var marker;
 
 
 	function paintStreet(streets){
-		// Создаем объект стилей:
+		// РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ СЃС‚РёР»РµР№:
 		var style1 = new DG.Style.Geometry();
 		var style2 = new DG.Style.Geometry();
-		// Устанавливаем значения свойств:
+		// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·РЅР°С‡РµРЅРёСЏ СЃРІРѕР№СЃС‚РІ:
 		style1.strokeColor = "red";
 		style1.strokeOpacity = 1;
 		style1.strokeWidth = 5;
@@ -63,8 +63,8 @@ var marker;
 				nearDist=result[i].dist;
 			}
 		}
-		alert("Ближайшая улица: " +nearStreet.name);
-		alert("расстояние до нее = "+nearDist);
+		alert("Р‘Р»РёР¶Р°Р№С€Р°СЏ СѓР»РёС†Р°: " +nearStreet.name);
+		alert("СЂР°СЃСЃС‚РѕСЏРЅРёРµ РґРѕ РЅРµРµ = "+nearDist);
 		
 	      return nearStreet;
 	}
@@ -87,7 +87,7 @@ var marker;
 		};
 
 		function failure(error){
-				alert("Ошибка "+error.err+" " +error.message);
+				alert("РћС€РёР±РєР° "+error.err+" " +error.message);
 		};
 	}
 
@@ -110,12 +110,12 @@ var marker;
 
 
 	function successMarkers(result){
-		alert("Обнаружено "+result.length+" объектов");
+		alert("РћР±РЅР°СЂСѓР¶РµРЅРѕ "+result.length+" РѕР±СЉРµРєС‚РѕРІ");
 		drawMarkers(result, 'sight');
 		return result;		
 	}
 
-	//Запрос данных
+	//Р—Р°РїСЂРѕСЃ РґР°РЅРЅС‹С…
 	function querySimple(successF, query, type, radius, bound){
 		myMap.geocoder.get(query, 
 			{types:type, 
@@ -123,7 +123,7 @@ var marker;
 			bound:bound, 
 			success:successF,
 			failure:function(code, error){
-				if (code==404){ alert("Объектов не обнаружено");}
+				if (code==404){ alert("РћР±СЉРµРєС‚РѕРІ РЅРµ РѕР±РЅР°СЂСѓР¶РµРЅРѕ");}
 				else {alert(error+" " + code);}
 			}
 	
@@ -134,7 +134,7 @@ var marker;
 
 
 	function createMarker(){	    
-		marker=new DG.Markers.Common({geoPoint:new DG.GeoPoint(61.407778,55.160556), hint:"Я здесь"});
+		marker=new DG.Markers.Common({geoPoint:new DG.GeoPoint(61.407778,55.160556), hint:"РЇ Р·РґРµСЃСЊ"});
 		observers[0]=myMap.addEventListener(myMap.getContainerId(), 'DgClick', 
 		createPoint=function(eventMouse){
 			marker.setPosition(eventMouse.getGeoPoint());			
@@ -153,7 +153,7 @@ var marker;
 				"bound[point1]="+myMap.getBounds().getLeftTop().getLon().toFixed(6)+","+myMap.getBounds().getLeftTop().getLat().toFixed(6)+"&bound[point2]="+myMap.getBounds().getRightBottom().getLon().toFixed(6)+","+myMap.getBounds().getRightBottom().getLat().toFixed(6));
 	}
 
-//не хочет работать что-то
+//РЅРµ С…РѕС‡РµС‚ СЂР°Р±РѕС‚Р°С‚СЊ С‡С‚Рѕ-С‚Рѕ
 	function clear(){
 		myMap.markers.removeAll();
 		myMap.geometries.removeAll();
@@ -162,7 +162,7 @@ var marker;
 
 	}
 
-	//получение результата запроса в виде json-страницы
+	//РїРѕР»СѓС‡РµРЅРёРµ СЂРµР·СѓР»СЊС‚Р°С‚Р° Р·Р°РїСЂРѕСЃР° РІ РІРёРґРµ json-СЃС‚СЂР°РЅРёС†С‹
 	function queryNotSimple(success, query, type, radius){
 		var request = new XMLHttpRequest();
 		var query = "http://catalog.api.2gis.ru/geo/search?q="+query+"&types="+type+"&radius="+radius+"&version=1.3&key=ruocgd9025";
@@ -172,11 +172,11 @@ var marker;
 				if (this.status == 200) {
 					var response = JSON.parse(this.responseText);
 					//alert(response.response_code);
-					alert("Получено "+response.total+" записей");
+					alert("РџРѕР»СѓС‡РµРЅРѕ "+response.total+" Р·Р°РїРёСЃРµР№");
 					success(response.result);
         			}
 				else {
-					alert("Ошибка получения данных");
+					alert("РћС€РёР±РєР° РїРѕР»СѓС‡РµРЅРёСЏ РґР°РЅРЅС‹С…");
 				}
 			}
 		};
