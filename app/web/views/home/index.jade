@@ -1,4 +1,42 @@
 extends /layouts/application
 
 block append content
-  h1= controller
+  #main-columns.row
+    .col-sm-4.col-md-3.left.full-height
+      ul.nav.nav-tabs
+        li.active
+          a(href="#search", data-toggle="tab") Search
+        if signedIn
+          li
+            a(href="#history", data-toggle="tab") History
+      .tab-content
+        #search.tab-pane.fade.in.active
+          form#search-form(role="form")
+            .form-group
+              label(for="search-city") City
+              select#search-city.form-control(disabled="disabled")
+                option(selected="selected", value="Chelyabinsk") Chelyabinsk
+            .form-group
+              label Filters
+              .checkbox
+                label
+                  input(type="checkbox")
+                  | Theaters
+              .checkbox
+                label
+                  input(type="checkbox")
+                  | Shops
+              .checkbox
+                label
+                  input(type="checkbox")
+                  | Etc
+              button.btn.btn-default
+                | Reset
+          .container-fluid
+            .row
+              h3 Results
+        if signedIn
+          #history.tab-pane.fade
+    .col-sm-8.col-md-9.right.full-height
+      .panel.panel-default.full-height(style="background:#eee")
+        .panel-body
