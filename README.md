@@ -37,6 +37,8 @@
   - [jQuery](http://jquery.com/) - работа с DOM структурой документа
 
 
+## [Wiki](https://github.com/ovcharik/TravelFoot/wiki)
+
 ## Разработчики
 
   - Никульшин Андрей
