@@ -39,6 +39,8 @@
 
 ## [Wiki](https://github.com/ovcharik/TravelFoot/wiki)
 
+## [Записка к проекту](https://github.com/ovcharik/TravelFoot/blob/master/course-note.md)
+
 ## Разработчики
 
   - Никульшин Андрей
