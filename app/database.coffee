@@ -15,7 +15,6 @@ class Database
     @connection.once 'open', @initModels.bind(@)
   
   initModels: ->
-    
     @models = require './models'
     
     for key, value of @models

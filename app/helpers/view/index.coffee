@@ -1,11 +1,8 @@
 fs = require 'fs'
 
-ViewHelper = {}
-views = _.map fs.readdirSync(__dirname), (view) ->
+module.exports = {}
+
+for view in fs.readdirSync(__dirname).remove(['index.coffee']) when view.match(/\.(coffee|js)$/)
   view = view.replace(/\.coffee/, '')
-
-for view in views when view != 'index'
   view = require ("./#{view}")
-  _.extend ViewHelper, view
-
-module.exports = ViewHelper
+  _.extend module.exports, view
