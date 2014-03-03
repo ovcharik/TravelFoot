@@ -1,13 +1,12 @@
 ApplicationHelper =
   
   findCurrentUser: ->
-    if @request.cookies.email and @request.cookies.password
-      user = {
-        email: @request.cookies.email
-        password: @request.cookies.password
-      }
-      User.findOne user, (err, user) =>
-        @setCurrentUser user if not err and user
+    userId = @request.cookies.user
+    token  = @request.cookies.token
+    if userId and token
+      User.findOne {_id: userId}, (err, user) =>
+        if not err and user.checkSession(@request)
+          @setCurrentUser user
         @next()
       return false
     return true

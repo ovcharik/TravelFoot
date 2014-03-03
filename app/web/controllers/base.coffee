@@ -15,13 +15,6 @@ class BaseController extends Module
     @controller = _getControllerName.apply(@)
     @layout     = @constructor._layout || "/layouts/application"
     
-    #@response.locals = @
-    for key, value of @
-      if typeof(value) == "function"
-        @response.locals[key] = value.bind(@)
-      else
-        @response.locals[key] = value
-    
     @initialize()
     @respond()
   
@@ -53,6 +46,8 @@ class BaseController extends Module
       value = false
     if not value
       value = "#{@controller}/#{@action}"
+    
+    _setLocals.apply(@)
     @response.render value, data
     @
   
@@ -107,5 +102,12 @@ class BaseController extends Module
   
   _getControllerName = ->
     @constructor.name.replace(/Controller/, '').toLowerCase()
+  
+  _setLocals = ->
+    for key, value of @
+      if typeof(value) == "function"
+        @response.locals[key] = value.bind(@)
+      else
+        @response.locals[key] = value
   
 module.exports = BaseController

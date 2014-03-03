@@ -1,8 +1,10 @@
+underscore = require 'underscore'
+
 require './string'
 require './array'
 
 module.exports = {
-  _     : require 'underscore'
+  _     : underscore
   Module: require './module'
 }
 

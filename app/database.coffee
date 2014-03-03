@@ -19,7 +19,9 @@ class Database
     @models = require './models'
     
     for key, value of @models
-      @models[key] = @Mongoose.model(value.name, @Mongoose.Schema(value.schema))
+      model = @Mongoose.model(value.name, @Mongoose.Schema(value.schema))
+      _.extend model.prototype, value.prototype
+      @models[key] = model
       global[key] = @models[key]
   
 module.exports = Database

@@ -6,11 +6,13 @@ AuthHelper =
       now = new Date
       now.setDate(now.getDate() + 30)
       options.expires = now
-    @response.cookie 'email', user.email, options
-    @response.cookie 'password', user.password, options
+    session = user.createSession(@request)
+    @response.cookie 'user', user._id, options
+    @response.cookie 'token', session.hash, options
   
   signout: ->
-    @response.clearCookie 'email'
-    @response.clearCookie 'password'
+    @currentUser.killSession(@request)
+    @response.clearCookie 'user'
+    @response.clearCookie 'token'
   
 module.exports = AuthHelper

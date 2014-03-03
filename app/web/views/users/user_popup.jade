@@ -1,8 +1,10 @@
 li.dropdown
   a.dropdown-toggle(href="javascript:void(0)", data-toggle="dropdown")
+    img(src=gravatarUrl(currentUser.email, {size: 20}))
+    | &nbsp;
     = currentUser.email
     | &nbsp;
     span.caret
   .dropdown-menu(style="min-width:250px; padding: 15px")
     a.btn.btn-primary.btn-block(href="/signout")
-      | Sing out
+      | Sign out

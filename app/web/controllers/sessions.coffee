@@ -7,6 +7,7 @@ class SessionsController extends ApplicationController
     user = @request.body.user
     remember = user.remember
     if user
+      #TODO исправить
       User.findOne {
         email: user.email,
         password: user.password
