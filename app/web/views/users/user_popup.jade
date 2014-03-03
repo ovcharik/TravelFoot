@@ -1,10 +1,18 @@
 li.dropdown
-  a.dropdown-toggle(href="javascript:void(0)", data-toggle="dropdown")
-    img(src=gravatarUrl(currentUser.email, {size: 20}))
-    | &nbsp;
+  button.btn.btn-default.navbar-btn.dropdown-toggle(href="javascript:void(0)", data-toggle="dropdown")
+    .image
+      img(src=gravatarUrl(currentUser, {size: 34}))
     = currentUser.email
     | &nbsp;
     span.caret
-  .dropdown-menu(style="min-width:250px; padding: 15px")
-    a.btn.btn-primary.btn-block(href="/signout")
-      | Sign out
+  ul.dropdown-menu
+    li.disabled
+      a.menuitem(href="/profile")
+        | Profile
+    li.disabled
+      a.menuitem(href="/sessions")
+        | Sessions
+    li.divider
+    li
+      a.menuitem(href="/signout")
+        | Sign out
