@@ -15,7 +15,12 @@ class BaseController extends Module
     @controller = _getControllerName.apply(@)
     @layout     = @constructor._layout || "/layouts/application"
     
-    @response.locals = @
+    #@response.locals = @
+    for key, value of @
+      if typeof(value) == "function"
+        @response.locals[key] = value.bind(@)
+      else
+        @response.locals[key] = value
     
     @initialize()
     @respond()

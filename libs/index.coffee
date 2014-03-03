@@ -1,3 +1,6 @@
+require './string'
+require './array'
+
 module.exports = {
   _     : require 'underscore'
   Module: require './module'

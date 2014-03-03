@@ -55,6 +55,7 @@ logger  = require './app/logger'
 @server.express.set 'view engine', 'jade'
 @server.express.set 'views', __dirname + config.get('web:views')
 @server.express.locals.basedir = @server.express.get 'views'
+_.extend @server.express.locals, helpers.ViewHelper
 
 web = new Web(@server)
 

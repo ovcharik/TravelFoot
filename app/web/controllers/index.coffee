@@ -1,9 +1,8 @@
-Home = require './home'
-Sessions = require './sessions'
-Registrations = require './registrations'
+fs = require 'fs'
 
-module.exports = {
-  home: Home
-  sessions: Sessions
-  registrations: Registrations
-}
+module.exports = {}
+
+files = fs.readdirSync(__dirname).remove ['index.coffee', 'base.coffee']
+for file in files
+  file = file.replace /\.(coffee|js)/, ''
+  module.exports[file] = require "./#{file}"
