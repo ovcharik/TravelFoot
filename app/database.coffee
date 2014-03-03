@@ -21,6 +21,8 @@ class Database
     for key, value of @models
       model = @Mongoose.model(value.name, @Mongoose.Schema(value.schema))
       _.extend model.prototype, value.prototype
+      for k, v of value when k != 'name' and k != 'schema'
+        model[k] = v
       @models[key] = model
       global[key] = @models[key]
   
