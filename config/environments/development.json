@@ -11,7 +11,7 @@
   },
   
   "logs": {
-    "path"   : "logs/development.log",
+    "path"   : "log/development.log",
     "console": true
   },
   
