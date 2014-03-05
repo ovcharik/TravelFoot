@@ -1,6 +1,6 @@
 {
   "server": {
-    "port": "3000"
+    "port": "8081"
   },
   
   "web": {
@@ -11,12 +11,12 @@
   },
   
   "logs": {
-    "path"   : "logs/development.log",
-    "console": true
+    "path"   : "log/production.log",
+    "console": false
   },
   
   "database": {
     "host"    : "localhost",
-    "database": "travel_foot_dev"
+    "database": "travel_foot"
   }
 }
