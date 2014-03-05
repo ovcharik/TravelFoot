@@ -3,17 +3,17 @@
   "version": "0.0.1",
   
   "dependencies": {
-    "coffee-script": ">=1.6.x",
-    "socket.io": ">=0.9.x",
-    "nconf": ">=0.6.x",
-    "express": ">=3.x",
-    "express-coffee": ">=0.0.8",
-    "less-middleware": ">=0.1.15",
-    "jade": "*",
-    "underscore": ">=1.5.x",
-    "winston": ">=0.7.x",
-    "mongoose": ">=3.6.x",
-    "bcrypt-nodejs": ">=0.0.x"
+    "coffee-script": "~1.6.0",
+    "socket.io": "~0.9.0",
+    "nconf": "~0.6.0",
+    "express": "~3.4.0",
+    "express-coffee": "~0.0.0",
+    "less-middleware": "~0.1.0",
+    "jade": "~1.1.0",
+    "underscore": "~1.5.0",
+    "winston": "~0.7.0",
+    "mongoose": "~3.6.0",
+    "bcrypt-nodejs": "~0.0.0"
   },
   
   "scripts": {
