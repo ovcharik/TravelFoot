@@ -5,7 +5,7 @@ ApplicationHelper =
     token  = @request.cookies.token
     if userId and token
       User.findOne {_id: userId}, (err, user) =>
-        if not err and user.checkSession(@request)
+        if not err and user and user.checkSession(@request)
           @setCurrentUser user
         @next()
       return false

@@ -17,6 +17,6 @@
   
   "database": {
     "host"    : "localhost",
-    "database": "travel_foot_dev"
+    "database": "travel_foot"
   }
 }
