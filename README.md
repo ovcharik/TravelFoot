@@ -1,7 +1,8 @@
-# TravelFoot
+# [TravelFoot](http://travel-foot.ru/)
 
 Сервис формирования маршрута для пешей прогулки в городе.
 
+[http://travel-foot.ru/](http://travel-foot.ru/)
 
 ## Установка
 
@@ -43,6 +44,6 @@
 
 ## Разработчики
 
-  - Никульшин Андрей
-  - Лукманова Альфия
-  - Овчарик Максим
+  - Никульшин Андрей (mmxkz@ya.ru)
+  - Лукманова Альфия (sindzirarenai@gmail.com)
+  - Овчарик Максим (maksim.ovcharik@gmail.com)
