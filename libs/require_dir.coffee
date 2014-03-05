@@ -7,6 +7,9 @@ defaultOptions =
   nameFun: (name) ->
     return name
   
+  packing: (object, loaded, name) ->
+    object[name] = loaded
+  
   except: ['index.js', 'index.coffee']
   filter: /\.(js|coffee)$/
 
@@ -23,6 +26,6 @@ module.exports = (path, options) ->
   for file in files
     continue if not file.match(options.filter)
     name = options.nameFun file.replace /\.[0-9a-z]+$/i, ''
-    result[name] = require "#{path}/#{file}"
+    options.packing result, require("#{path}/#{file}"), name
   
   return result
