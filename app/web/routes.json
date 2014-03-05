@@ -26,5 +26,10 @@
       "controller": "registrations",
       "action"    : "create"
     }
-  ]
+  ],
+    "/buffer": {
+    "method"    : "get",
+    "controller": "buffer",
+    "action"    : "index"
+  }
 }

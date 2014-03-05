@@ -11,27 +11,26 @@ block append content
             a(href="#history", data-toggle="tab") History
       .tab-content
         #search.tab-pane.fade.in.active
-          form#search-form(role="form")
+          form#search-form(role="form", action="/buffer", method = "GET")
             .form-group
               label(for="search-city") City
               select#search-city.form-control(disabled="disabled")
-                option(selected="selected", value="Chelyabinsk") Chelyabinsk
+                option(selected="selected", name="City") Chelyabinsk
             .form-group
               label Filters
-              .checkbox
-                label
-                  input(type="checkbox")
-                  | Theaters
-              .checkbox
-                label
-                  input(type="checkbox")
-                  | Shops
-              .checkbox
-                label
-                  input(type="checkbox")
-                  | Etc
+              - for (var i=0; i<types.length; i++)
+                .checkbox
+                  label
+                  input(type="checkbox", name=types[i].name)
+                  p= types[i].name
+              .input
+                label  Radius
+                  br			
+                  input(type="text", name="Radius") 			  
               button.btn.btn-default
                 | Reset
+              button.btn.btn-default(type="submit")
+                | Buffer search
           .container-fluid
             .row
               h3 Results
