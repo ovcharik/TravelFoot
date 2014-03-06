@@ -1,5 +1,5 @@
-class Places
-  @name = 'Places'
+class Place
+  @name = 'Place'
   @shema = {
     name:    { type: String, required: true },
     discription: { type: String},

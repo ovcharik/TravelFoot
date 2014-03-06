@@ -9,7 +9,7 @@
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/app/models/user.js" />
-      <root url="file://$PROJECT_DIR$/app/models/showplaces.js" />
+      <root url="file://$PROJECT_DIR$/app/models/place.js" />
       <root url="file://$PROJECT_DIR$/app/models/index.js" />
     </CLASSES>
     <SOURCES />
