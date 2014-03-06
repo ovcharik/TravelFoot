@@ -1,0 +1,22 @@
+{
+  "server": {
+    "port": "3000"
+  },
+  
+  "web": {
+    "public": "/public",
+    "less"  : "/less",
+    "css"   : "/css",
+    "views" : "/app/web/views"
+  },
+  
+  "logs": {
+    "path"   : "logs/development.log",
+    "console": true
+  },
+  
+  "database": {
+    "host"    : "localhost",
+    "database": "travel_foot"
+  }
+}
