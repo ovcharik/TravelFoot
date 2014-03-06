@@ -17,6 +17,20 @@
   
   "database": {
     "host"    : "localhost",
-    "database": "travel_foot_dev"
-  }
+    "database": "travel_foot"
+  },
+
+  "types": [
+  {"name":"Sight",
+   "query":["памятник","фонтан","статуя"]},
+
+  {"name": "Place",
+  "query": ["парк","кладбище"]},
+
+  {"name":"Religion",
+   "query": ["мечеть","церковь","синагога"]},
+  
+  {"name":"Culture",
+   "query":["музей","театр"]}
+  ]
 }
