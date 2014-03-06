@@ -2,17 +2,41 @@ ApplicationController = require './application'
 config = require '../../../config'
 
 class BufferController extends ApplicationController
+	
 	index:->
-		@types = config.get("types")
-		answer="I get url: ";
-		answer += " "+ @request.url
-		answer += "<br> And i get "
+		json={}
+		errors=[]
+		@types=config.get("types")
+		error = true
+		json.success = true
+
+#if not filters		
 		for t in @types
-			answer += " "+t.name+"="+ @request.param(t.name)
-		answer += " Radius="+ @request.param("Radius")
-		@response.send(200, answer)
-		return true
+			if @request.param(t.name)=="on"
+				error = false
 		
+		if (error==true)
+			json.success=false
+			errors.push 'Filter is not selected'		
+	
+#if not radius	
+		radius=@request.param("Radius")
+		
+		if radius==undefined || radius.trim()==''
+			json.success=false
+			errors.push 'Encorrect radius'	
+				
+		json.errors = errors
+		
+#get data from model
+		#to-do model.getPlaces(@request.query), return results
+
+#send json
+		@response.json (json)
+		
+		@next
+		return false
+			
 	create:->		
 		return true
 		

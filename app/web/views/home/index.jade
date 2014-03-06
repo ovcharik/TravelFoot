@@ -27,13 +27,14 @@ block append content
                 label  Radius
                   br			
                   input(type="text", name="Radius") 			  
-              button.btn.btn-default
+              button.btn.btn-default(type="default")
                 | Reset
               button.btn.btn-default(type="submit")
                 | Buffer search
           .container-fluid
-            .row
-              h3 Results
+            h3 Results
+            .row#results  
+            .row.error#results_error		  
         if signedIn
           #history.tab-pane.fade
     .col-sm-8.col-md-9.right.full-height
