@@ -1,8 +1,11 @@
 class Place
+  
   @name = 'Place'
-  @shema = {
-    name:    { type: String, required: true },
+  @schema = {
+    name: { type: String, required: true },
     discription: { type: String},
-    coord: { type: [Number], index: '2d', required: true }
+    coord: { type: [Number], index: '2d', required: true },
     image: { type: String }
   }
+  
+module.exports = Place
