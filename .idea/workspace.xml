@@ -46,7 +46,7 @@
       <file leaf-file-name="showplaces.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/showplaces.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="217" selection-end="217" vertical-scroll-proportion="0.34605598" vertical-offset="0" max-vertical-offset="393">
+            <state line="3" column="46" selection-start="91" selection-end="91" vertical-scroll-proportion="0.129771" vertical-offset="0" max-vertical-offset="393">
               <folding />
             </state>
           </provider>
@@ -252,7 +252,11 @@
       <created>1394132453812</created>
       <updated>1394132453812</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="+ model places.&#10;+ files on web storm&#10;">
+      <created>1394132480785</created>
+      <updated>1394132480785</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -292,7 +296,8 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="+ model places.&#10;+ files on web storm" />
-    <option name="LAST_COMMIT_MESSAGE" value="+ model places.&#10;+ files on web storm" />
+    <MESSAGE value="+ model places.&#10;+ files on web storm&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="+ model places.&#10;+ files on web storm&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -346,7 +351,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/showplaces.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="217" selection-end="217" vertical-scroll-proportion="0.34605598" vertical-offset="0" max-vertical-offset="393">
+        <state line="3" column="46" selection-start="91" selection-end="91" vertical-scroll-proportion="0.129771" vertical-offset="0" max-vertical-offset="393">
           <folding />
         </state>
       </provider>
