@@ -1,5 +1,5 @@
 Array::remove = (value) ->
-  if typeof(value) === "string"
+  if typeof(value) == "string"
     value = [value]
   
   if value instanceof Array
