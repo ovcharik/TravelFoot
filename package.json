@@ -13,6 +13,7 @@
     "underscore": "~1.5.0",
     "winston": "~0.7.0",
     "mongoose": "~3.6.0",
+    "mongoose-findorcreate": "x",
     "bcrypt-nodejs": "~0.0.0"
   },
   

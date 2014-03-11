@@ -3,6 +3,7 @@ HTTP = require 'http'
 URL  = require 'url'
 
 Mongoose = require 'mongoose'
+findOrCreate = require 'mongoose-findorcreate'
 
 requestOptions = {
   protocol: "http",
@@ -42,22 +43,43 @@ queries = {
 Schema   = Mongoose.Schema
 ObjectId = Schema.ObjectId
 
-Place = Mongoose.model 'Place', new Schema {
-  name:   { type: String, required: true },
-  coord:  { type: [Number], index: '2d', required: true },
-  group:  { type: String },
-  query:  { type: String },
+userSchema = new Schema {
+  email:    { type: String, required: true, unique: true },
+  password: { type: String, required: true }
+}
+
+placeSchema = new Schema {
+  name:        { type: String, required: true },
+  description: { type: String },
+  coord:       { type: [Number], index: '2d', required: true },
+  kind:        { type: String },
+  
+  address: {
+    city:   { type: String },
+    street: { type: String },
+    house:  { type: String }
+  },
+  
   images: [{
     url: { type: String }
   }],
-  tags:   [{ type: ObjectId, ref: 'Tag' }]
+  
+  owner: { type: ObjectId, ref: 'User' }
+  tags:  [{ type: ObjectId, ref: 'Tag' }]
 }
 
-Tag = Mongoose.model 'Tag', new Schema {
+tagSchema = new Schema {
   value:  { type: String, required: true, unique: true }
   places: [{ type: ObjectId, ref: 'Place', unique: true }]
 }
 
+placeSchema.plugin findOrCreate
+userSchema.plugin findOrCreate
+tagSchema.plugin findOrCreate
+
+Place = Mongoose.model 'Place', placeSchema
+User  = Mongoose.model 'User', userSchema
+Tag = Mongoose.model 'Tag', tagSchema
 
 querySearch = (queryStr, callback) ->
   options = _.clone requestOptions
@@ -78,16 +100,99 @@ querySearch = (queryStr, callback) ->
       else
         callback json.response.GeoObjectCollection.featureMember
 
+findObjectsStack = 0
 findObjects = (group, word) ->
+  findObjectsStack += 1
   querySearch word, (objects) ->
-    console.log group, word, objects.length
+    for object in objects when object["GeoObject"]
+      newPlace object["GeoObject"], group, word
+    findObjectsStack -= 1
+    if findObjectsStack == 0
+      saveBuffers()
 
+newPlace = (ya, kind, query) ->
+  p = {}
+  tags = [query]
+  if ya["metaDataProperty"] and ya["metaDataProperty"]["PSearchObjectMetaData"] 
+    if ya["metaDataProperty"]["PSearchObjectMetaData"]["Address"]
+      addr = ya["metaDataProperty"]["PSearchObjectMetaData"]["Address"]
+      p.address = {}
+      p.address.city   = addr["locality"]      if addr["locality"]
+      p.address.street = addr["thoroughfare"]  if addr["thoroughfare"]
+      p.address.house  = addr["premiseNumber"] if addr["premiseNumber"]
+    if ya["metaDataProperty"]["PSearchObjectMetaData"]["Tags"]
+      p.tags = []
+      for tag in ya["metaDataProperty"]["PSearchObjectMetaData"]["Tags"] when tag.tag?
+        tags.push tag.tag
+  
+  p.description = ya["description"] if ya["description"]
+  p.name = ya["name"]
+  p.coord = ya["Point"]["pos"].split(" ")
+  p.kind = kind
+  
+  place = new Place(p)
+  addPlace place, tags
+
+
+globalOwner = undefined
+placesBuffer = []
+addPlace = (place, tags) ->
+  p = new Place place
+  for t in tags
+    tag = getTag(t)
+    tag.places.push p._id
+    p.tags.push tag._id
+  p.owner = globalOwner._id if globalOwner
+  placesBuffer.push p
+  
+
+tagsBuffer = {}
+getTag = (tag) ->
+  if tagsBuffer[tag]
+    tagsBuffer[tag]
+  else
+    t = new Tag { value: tag, places: [] }
+    tagsBuffer[tag] = t
+    t
+
+saveBuffers = ->
+  c = 0
+  for p in placesBuffer
+    c += 1
+    p.save (err, p) ->
+      c -= 1
+      throw err if err
+      console.log p
+      if c == 0
+        printInfo()
+  for i, t of tagsBuffer
+    c += 1
+    t.save (err, t) ->
+      c -= 1
+      throw err if err
+      console.log t
+      if c == 0
+        printInfo()
+
+printInfo = ->
+  console.log "Count of places: #{placesBuffer.length}\n"
+  console.log "Tags:"
+  counter = 0
+  for i, v of tagsBuffer
+    counter++
+    console.log "\t#{counter}: #{i}"
+  console.log "done"
+  Mongoose.connection.close()
 
 Mongoose.connect 'mongodb://localhost/travel_foot', (err) ->
   throw err if err
   
-  for group, words of queries
-    for word in words
-      findObjects group, word
-      break
-    break
+  User.findOrCreate { email: "system" }, { email: "system", password: "ph06ahyoVble" }, (err, user) ->
+    throw err if err
+    console.log user
+    
+    globalOwner = user
+    
+    for group, words of queries
+      for word in words
+        findObjects group, word

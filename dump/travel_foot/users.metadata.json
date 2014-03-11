@@ -1,0 +1,1 @@
+{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "travel_foot.users", "name" : "_id_" }, { "v" : 1, "key" : { "email" : 1 }, "unique" : true, "ns" : "travel_foot.users", "name" : "email_1", "background" : true, "safe" : null } ] }
