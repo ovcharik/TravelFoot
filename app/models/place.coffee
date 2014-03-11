@@ -1,3 +1,5 @@
+ObjectId = require('mongoose').Schema.ObjectId
+
 class Place
   
   @name = 'Place'

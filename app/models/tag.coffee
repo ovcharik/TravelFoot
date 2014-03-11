@@ -1,3 +1,5 @@
+ObjectId = require('mongoose').Schema.ObjectId
+
 class Tag
   
   @name = 'Tag'
