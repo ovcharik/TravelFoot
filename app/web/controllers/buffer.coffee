@@ -24,17 +24,17 @@ class BufferController extends ApplicationController
 		
 		if radius==undefined || radius.trim()==''
 			json.success=false
-			errors.push 'Encorrect radius'	
+			errors.push 'Encorrect radius'
 				
 		json.errors = errors
 		
-#get data from model
-		#to-do model.getPlaces(@request.query), return results
-
+		if errors.length==0
+			json.results = Place.bufferSearch(@request.query)
+			
+		@next
 #send json
 		@response.json (json)
-		
-		@next
+
 		return false
 			
 	create:->		
