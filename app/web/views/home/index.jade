@@ -24,19 +24,34 @@ block append content
                   input(type="checkbox", name=types[i].name)
                   p= types[i].name
               .input
-                label  Radius
-                  br			
-                  input(type="text", name="Radius") 			  
+                label Radius
+                  br
+                  input(type="text", name="Radius")
               button.btn.btn-default(type="default")
                 | Reset
               button.btn.btn-default(type="submit")
                 | Buffer search
           .container-fluid
             h3 Results
-            .row#results  
-            .row.error#results_error		  
+            .row#results
+            .row.error#results_error
         if signedIn
           #history.tab-pane.fade
     .col-sm-8.col-md-9.right.full-height
       .panel.panel-default.full-height(style="background:#eee")
         .panel-body
+          | lng1
+          input#lng1(value="56.519351837305")
+          br
+          | lat1
+          input#lat1(value="52.992553710938")
+          br
+          br
+          | lng2
+          input#lng2(value="57.519351837305")
+          br
+          | lat2
+          input#lat2(value="53.992553710938")
+          br
+          br
+          input#calc(type="button", value="calc")

@@ -1,16 +1,128 @@
-
-	class Converter
-		@sphericalToDecart: (point)->
-			result=[]
-			result[0]= ( Math.sin(point[1]*(Math.PI/180))*Math.cos(point[0]*(Math.PI/180))*6371 )
-			result[1]=( Math.sin(point[1]*(Math.PI/180))*Math.sin(point[0]*(Math.PI/180))*6371 )
-			result[2]=( Math.cos(point[1]*(Math.PI/180))*6371 )
-			return result
-		
-		@decartToSpherical: (point)->
-			result=[]
-			result[0]= ( Math.atan(point[1]/point[0]) )*(180/Math.PI)
-			result[1]= ( Math.acos(point[2]/ (Math.sqrt(point[0]*point[0]+point[1]*point[1]+point[2]*point[2]) )) )*(180/Math.PI)
-			return result
-
-module.exports = Converter
+# deg - координаты в градусах
+# rad - координаты в радианах
+# dec - координаты в декартовой системе
+# flat - плоские координаты
+class Converter
+  # sphPoints: array of points
+  # point is array of type [lng, lat]
+  constructor: (sphPoints) ->
+    count = sphPoints.length
+    decPoints = @deg2dec(sphPoints)
+    
+    x = 0
+    y = 0
+    z = 0
+    for p in decPoints
+      x += p[0]
+      y += p[1]
+      z += p[2]
+    
+    x /= count
+    y /= count
+    z /= count
+    
+    @normal = (new Math.Vector3 [x, y, z])
+    
+    baseZ = @normal.normal()
+    baseX = (new Math.Vector3 [0, 1, 0]).mul(baseZ)
+    baseY = (new Math.Vector3 [1, 0, 0]).mul(baseZ)
+    
+    @base = (new Math.Matrix3 [
+      baseX.to_a(),
+      baseY.to_a(),
+      baseZ.to_a()
+    ]).trans()
+    @baseI = @base.inverse()
+    
+    @normalFlat = new Math.Vector3 @baseI.mul(@normal).trans().to_a()[0]
+    @z = @normalFlat.to_a()[2]
+    
+    @flatPoints = @dec2flat(decPoints)
+  
+  deg2rad: (degPoints) ->
+    radPoints = new Array(degPoints.length)
+    for i of degPoints
+      for j of degPoints[i]
+        radPoints[i] = new Array(2) if not radPoints[i]
+        radPoints[i][j] = Math.deg2rad degPoints[i][j]
+    radPoints
+  
+  rad2deg: (radPoints) ->
+    degPoints = new Array(radPoints.length)
+    for i of radPoints
+      for j of radPoints[i]
+        degPoints[i] = new Array(2) if not degPoints[i]
+        degPoints[i][j] = Math.rad2deg radPoints[i][j]
+    degPoints
+  
+  rad2dec: (radPoints) ->
+    decPoints = new Array(radPoints.length)
+    for i of radPoints
+      decPoints[i] = Math.sph2dec radPoints[i]
+  
+  dec2rad: (decPoints) ->
+    radPoints = new Array(decPoints.length)
+    for i of radPoints
+      radPoints[i] = Math.dec2sph decPoints[i]
+  
+  deg2dec: (degPoints) ->
+    decPoints = new Array(degPoints.length)
+    radPoints = new Array(degPoints.length)
+    for i of degPoints
+      for j of degPoints[i]
+        radPoints[i] = new Array(2) if not radPoints[i]
+        radPoints[i][j] = Math.deg2rad degPoints[i][j]
+      decPoints[i] = Math.sph2dec radPoints[i]
+    decPoints
+  
+  dec2deg: (decPoints) ->
+    radPoints = new Array(decPoints.length)
+    degPoints = new Array(decPoints.length)
+    for i of decPoints
+      radPoints[i] = Math.dec2sph decPoints[i]
+      for j of radPoints[i]
+        degPoints[i] = new Array(2) if not degPoints[i]
+        degPoints[i][j] = Math.rad2deg radPoints[i][j]
+      degPoints[i].splice(2, 1)
+    degPoints
+  
+  dec2flat: (decPoints) ->
+    flat = new Array(decPoints.length)
+    for i of decPoints
+      flat[i] = new Array(2) if not flat[i]
+      flat[i] = @baseI.mul(new Math.Vector3 decPoints[i]).trans().to_a()[0].slice(0, 2)
+    flat
+  
+  deg2flat: (degPoints) ->
+    @dec2flat @deg2dec degPoints
+  
+  flat2dec: (flat) ->
+    vPoints = new Array(flat.length)
+    for i of flat
+      for j of flat[i]
+        vPoints[i] = new Array(3) if not vPoints[i]
+        vPoints[i][j] = flat[i][j]
+      vPoints[i][2] = @z
+    
+    decPoints = new Array(vPoints.length)
+    for i of vPoints
+      decPoints[i] = new Array(2) if not decPoints[i]
+      decPoints[i] = @base.mul(new Math.Vector3 vPoints[i]).trans().to_a()[0]
+    decPoints
+  
+  flat2deg: (flat) ->
+    @dec2deg @flat2dec flat
+  
+  # main methods
+  
+  # преобразуем градусы в плоские точки
+  toFlat: (deg) ->
+    @deg2flat deg
+  
+  # преобразуем плоские точки в градусы
+  fromFlat: (flat) ->
+    @flat2deg flat
+  
+  # получение плоских точек из которых инициализировался массив
+  getFlat: ->
+    @flatPoints
