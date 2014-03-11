@@ -27,6 +27,18 @@
     $ npm install
     $ npm start
 
+### Dump and Restore
+
+Dump монги находится в папке `/dump`.
+
+Для востановления данных выполняем в папке с проектом:
+
+    $ mongorestore dump
+
+Для создания дампа:
+
+    $ mongodump --db travel_foot
+
 
 ## Полезные ссылки
 
