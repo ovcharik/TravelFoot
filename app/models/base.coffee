@@ -2,9 +2,13 @@ Mongoose = require 'mongoose'
 
 class BaseModel extends Module
   @ObjectId = Mongoose.Schema.ObjectId
+  @Mixed    = Mongoose.Schema.Mixed
   
   @_init: ->
+    _initVirtualAttributes.apply @
+    
     _initValidators.apply @
+    _initMethodValidators.apply @
   
   
   # validation
@@ -36,7 +40,7 @@ class BaseModel extends Module
   
   _createValidator = (path, name, value, msg) ->
     switch name
-      when "regex"
+      when "regexp"
         path.validate ((v) ->
           value.test v
         ), (msg || 'regex')
@@ -76,7 +80,66 @@ class BaseModel extends Module
   @validates: (field, options) ->
     _addValidator.apply @, [field, options]
   
-  safeSave: (cb) ->
-    @save cb
+  
+  # method validators
+  _createMethodValidators = ->
+    @_methodValidators = {}
+  
+  _getMethodValidator = (name) ->
+    if not @_methodValidators[name]
+      @_methodValidators[name] = []
+    @_methodValidators[name]
+  
+  _addMethodValidator = (name, method, message) ->
+    if not @_methodValidators
+      _createMethodValidators.apply @
+    validator = _getMethodValidator.apply @, [name]
+    validator.push [method, message]
+  
+  _initMethodValidators = ->
+    return if not @_methodValidators
+    for field, values of @_methodValidators
+      path = @schema.path(field)
+      throw "Create validator: Can't find path '#{field}' for '#{@modelName}' model" if not path
+      for value in values
+        fn  = @::[value[0]]
+        msg = value[1]
+        path.validate fn, msg
+  
+  @validate: (field, method, message) ->
+    _addMethodValidator.apply @, [field, method, message]
+  
+  
+  # virtual attributes
+  _createVirtualAttrs = ->
+    @_virtualAttrs = []
+  
+  _addVirtualAttr = (attr) ->
+    if not @_virtualAttrs
+      _createVirtualAttrs.apply @
+    if typeof(attr) != "string"
+      throw "Virtual attr must be define as string"
+    @_virtualAttrs.push attr
+  
+  _initVirtualAttributes = ->
+    return if not @_virtualAttrs
+    for attr in @_virtualAttrs
+      _defineVirtualAttr.apply @, [attr]
+  
+  _defineVirtualAttr = (attr) ->
+    @schema.virtual(attr).get(() ->
+      return @["#{attr}"]
+    ).set((value) ->
+      @["#{attr}"] = value
+    )
+  
+  @virtualAttribute: (attr) ->
+    _addVirtualAttr.apply @, [attr]
+  
+  @virtualAttributes: (attrs) ->
+    if not (attrs instanceof Array)
+      attrs = [attrs]
+    for attr in attrs
+      _addVirtualAttr.apply @, [attr]
   
 module.exports = BaseModel

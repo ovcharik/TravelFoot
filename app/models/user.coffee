@@ -4,8 +4,8 @@ class User extends BaseModel
   
   @name = 'User'
   @schema = {
-    email:    { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    email:    { type: String, unique: true },
+    password: { type: String },
     sessions: [{
       ip:   { type: String },
       ua:   { type: String },
@@ -15,8 +15,21 @@ class User extends BaseModel
     }]
   }
   
-  @validates 'email',    {regex: [/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, 'not matched'], require: true, unique: true}
-  @validates 'password', {minLength: [3, 'min length is 3'], require: true}
+  @virtualAttributes 'confirm'
+  
+  @validates 'email',    {
+    regexp:  [/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, 'not email'],
+    require: [true, 'required'],
+    unique:  [true, 'already exist']
+  }
+  @validates 'password', {
+    minLength: [3, 'min length is 3'],
+    require:   [true, 'required']
+  }
+  
+  @validate 'password', 'confirmPassword', 'not matched'
+  confirmPassword: (value) ->
+    return not @isNew or @password == @confirm
   
   createSession: (request) ->
     md5sum = crypto.createHash('md5')
