@@ -15,7 +15,7 @@ class User extends BaseModel
     }]
   }
   
-  @validates 'email',    {regex: [/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, 'not matched'], require: true}
+  @validates 'email',    {regex: [/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, 'not matched'], require: true, unique: true}
   @validates 'password', {minLength: [3, 'min length is 3'], require: true}
   
   createSession: (request) ->

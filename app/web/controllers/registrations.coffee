@@ -11,18 +11,16 @@ class RegistrationsController extends ApplicationController
     user = @request.body.user
     errors = {}
     if user.password != user.confirm
-      errors.confirm = {type: 'not matched'}
+      errors.confirm = {message: 'not matched'}
     
-    if not errors.length
+    if not errors.confirm
       User.create {
         email: user.email,
         password: user.password
       }, (err, user) =>
         json = {}
         if err
-          if err.name == "MongoError" and err.code == 11000
-            errors.email = {type: 'already exists'}
-          else if err.name == "ValidationError"
+          if err.name == "ValidationError"
             errors = err.errors
           else
             errors.base = {type: 'internal unknow error'}

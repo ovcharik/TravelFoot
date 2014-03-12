@@ -32,7 +32,7 @@ class BaseModel extends Module
         if value instanceof Array
           msg = value[1]
           value = value[0]
-        _createValidator path, validator, value, msg
+        _createValidator.apply @, [path, validator, value, msg]
   
   _createValidator = (path, name, value, msg) ->
     switch name
@@ -58,6 +58,20 @@ class BaseModel extends Module
         ), (msg || 'maxLength')
       when "required"
         path.required value, (msg || 'required')
+      when "unique"
+        if value == true
+          model = @
+          path.validate ((v, respond) ->
+            query = { $and: [{_id: {$ne: @_id}}] }
+            target = {}
+            target[path.path] = @[path.path]
+            query.$and.push target
+            model.findOne query, ((respond) ->
+              (err, m) ->
+                respond(!m)
+            )(respond)
+            return
+          ), (msg || "not unique")
   
   @validates: (field, options) ->
     _addValidator.apply @, [field, options]

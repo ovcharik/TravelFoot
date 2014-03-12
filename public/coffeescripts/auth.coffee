@@ -36,7 +36,7 @@ $ ->
           $errors = $('.errors', $form)
           $errors.html ''
           for field, error of data.errors
-            $errors.append "<li><b>#{field}</b> #{error.type}</li>"
+            $errors.append "<li><b>#{field}</b> #{error.message}</li>"
           $alert.slideDown()
         $button.prop 'disabled', false
         

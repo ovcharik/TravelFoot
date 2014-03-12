@@ -45,7 +45,7 @@
             _ref = data.errors;
             for (field in _ref) {
               error = _ref[field];
-              $errors.append("<li><b>" + field + "</b> " + error.type + "</li>");
+              $errors.append("<li><b>" + field + "</b> " + error.message + "</li>");
             }
             $alert.slideDown();
           }
