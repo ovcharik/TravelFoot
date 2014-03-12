@@ -1,0 +1,50 @@
+mixin sight(sight)
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title= sight.name
+    .panel-body
+      - var cid = "carousel-" + sight._id
+      .carousel.slide.col-sm-5(id=cid, data-ride="carousel", data-interval="false")
+        - count = sight.images.length
+        .carousel-inner
+          - var first = true
+          if count == 0
+            - sight.images.push({url: "/images/nophoto", ext: "png"})
+          - each img in sight.images
+            .item(class=(first?"active":""))
+              - var url = img.url + "-middle." + img.ext
+              img(src=url, width="100%")
+            - first = false
+        
+        if count > 1
+          a.left.carousel-control(href="#"+cid, data-slide="prev")
+            span.glyphicon.glyphicon-chevron-left
+          a.right.carousel-control(href="#"+cid, data-slide="next")
+            span.glyphicon.glyphicon-chevron-right
+      
+      .col-sm-7
+        h4 Description
+        p= sight.description
+        h4 Address
+        p
+          if sight.address.city
+            b city&nbsp;
+            = sight.address.city
+            br
+          if sight.address.street
+            b street&nbsp;
+            = sight.address.street
+            br
+          if sight.address.house
+            b house&nbsp;
+            = sight.address.house
+        h4 Coords
+        p
+          = sight.coord
+    .panel-footer
+      b Tags:&nbsp;
+      - for (var i = 0; i < sight.tags.length; i++)
+        - tag = sight.tags[i]
+        a(href=pagination.path+"?tag="+tag.value)=tag.value
+        if i != sight.tags.length - 1
+          | ,&nbsp;

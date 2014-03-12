@@ -25,7 +25,7 @@ ObjectId = Schema.ObjectId
 placeSchema = new Schema {
   name:        { type: String, required: true },
   description: { type: String },
-  coord:       { type: [Number], index: '2d', required: true },
+  coord:       { type: [Number], index: '2dsphere', required: true },
   kind:        { type: String },
   
   address: {

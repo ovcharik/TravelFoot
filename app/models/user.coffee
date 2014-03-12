@@ -1,6 +1,6 @@
 crypto = require 'crypto'
 
-class User
+class User extends BaseModel
   
   @name = 'User'
   @schema = {

@@ -1,12 +1,10 @@
-ObjectId = require('mongoose').Schema.ObjectId
-
-class Place
+class Place extends BaseModel
   
   @name = 'Place'
   @schema = {
     name:        { type: String, required: true },
     description: { type: String },
-    coord:       { type: [Number], index: '2d', required: true },
+    coord:       { type: [Number], index: '2dsphere', required: true },
     kind:        { type: String },
     
     address: {
@@ -16,11 +14,13 @@ class Place
     },
     
     images: [{
-      url: { type: String }
+      url: { type: String },
+      ext: { type: String }
     }],
     
-    owner: { type: ObjectId, ref: 'User' }
-    tags:  [{ type: ObjectId, ref: 'Tag' }]
+    owner:  { type: @ObjectId, ref: 'User' },
+    editor: { type: @ObjectId, ref: 'User' },
+    tags:   [{ type: @ObjectId, ref: 'Tag' }]
   }
   
 module.exports = Place

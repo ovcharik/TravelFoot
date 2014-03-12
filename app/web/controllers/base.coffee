@@ -15,6 +15,8 @@ class BaseController extends Module
     @controller = _getControllerName.apply(@)
     @layout     = @constructor._layout || "/layouts/application"
     
+    @params = _.extend {}, @request.query, @request.body, @request.params
+    
     @initialize()
     @respond()
   

@@ -27,9 +27,16 @@
       "action"    : "create"
     }
   ],
-    "/buffer": {
+  
+  "/buffer": {
     "method"    : "get",
     "controller": "buffer",
+    "action"    : "index"
+  },
+  
+  "/sights/(:page)?": {
+    "method"    : "get",
+    "controller": "sights",
     "action"    : "index"
   }
 }

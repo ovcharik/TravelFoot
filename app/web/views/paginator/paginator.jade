@@ -1,0 +1,63 @@
+mixin paginator(p)
+  
+  - var path  = p.path
+  mixin item(v)
+    - var c = v.class || ""
+    - var url = (v.value) ? (path + "/" + v.value) : false
+    - var text = v.text || v.value
+    li(class=c)
+      if url
+        a(href=url)=text
+      else
+        span=text
+    
+  
+  ul.pagination
+    - var page  = p.page
+    - var pages = Math.ceil(p.total / p.per)
+    - var first = page == 1
+    - var last  = page == pages
+    
+    - var render = []
+    
+    if first
+      - render.push({text: "«", class: "disabled"})
+    else
+      - render.push({text: "«", value: page - 1})
+    
+    if page > 3
+      - var count = page - 4
+      - count = (count > 3) ? 3 : count
+      - for (var i = 1; i <= count; i++)
+        - render.push({value: i})
+      if page - 4 > 3
+        - render.push({text: "…", class: "disabled"})
+    
+    - var start = page - 3
+    - var end   = Number(page) + 3
+    if start < 1
+      - start = 1
+    if end > pages
+      - end = pages
+    
+    - for (var i = start; i <= end; i++)
+      - var r = {value: i}
+      - if (i == page) r.class = "active"
+      - render.push(r)
+    
+    if end < pages
+      if end + 4 < pages
+        - render.push({text: "…", class: "disabled"})
+      - var s = pages - 3
+      if end >= s
+        - s = end + 1
+      - for (var i = s; i <= pages; i++)
+        - render.push({value: i})
+    
+    if last
+      - render.push({text: "»", class: "disabled"})
+    else
+      - render.push({text: "»", value: Number(page) + 1})
+    
+    - each r in render
+      +item(r)

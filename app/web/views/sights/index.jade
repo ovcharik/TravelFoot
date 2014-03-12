@@ -1,0 +1,25 @@
+extends /layouts/application
+
+include /sights/sight
+include /paginator/paginator
+
+block append stylesheets
+  link(rel="stylesheet", href="/css/sights.css")
+
+block append content
+  .row
+    .col-sm-4
+      #sights-sidebar(data-spy="affix", data-offset-top="50", data-offset-bottom="60")
+        .panel.panel-primary
+          .panel-heading
+            h3.panel-title Info
+          .panel-body
+            p
+              | Found objects: 
+              b=pagination.total
+            
+    .col-sm-8
+      - each place in places
+        +sight(place)
+      div(style="text-align:center")
+        +paginator(pagination)
