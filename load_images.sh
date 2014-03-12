@@ -1,8 +1,8 @@
 #!/bin/bash
 
-for i in {1..47}
+for i in {1..67}
 do
   echo "exec: coffee find_images.coffee $i"
   coffee find_images.coffee $i
-  sleep 300
+  sleep 60
 done
