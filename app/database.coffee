@@ -22,6 +22,7 @@ class Database
       _.extend model.prototype, value.prototype
       for k, v of value when k != 'name' and k != 'schema'
         model[k] = v
+      model._init()
       @models[key] = model
       global[key] = @models[key]
   

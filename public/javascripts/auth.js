@@ -35,7 +35,7 @@
         data: $form.serialize(),
         dataFormat: 'JSON',
         success: function(data) {
-          var $alert, $errors, error, _i, _len, _ref;
+          var $alert, $errors, error, field, _ref;
           if (data.success) {
             window.location.pathname = '/';
           } else {
@@ -43,9 +43,9 @@
             $errors = $('.errors', $form);
             $errors.html('');
             _ref = data.errors;
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-              error = _ref[_i];
-              $errors.append("<li><b>" + error[0] + "</b> " + error[1] + "</li>");
+            for (field in _ref) {
+              error = _ref[field];
+              $errors.append("<li><b>" + field + "</b> " + error.type + "</li>");
             }
             $alert.slideDown();
           }

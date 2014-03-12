@@ -15,6 +15,9 @@ class User extends BaseModel
     }]
   }
   
+  @validates 'email',    {regex: [/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, 'not matched'], require: true}
+  @validates 'password', {minLength: [3, 'min length is 3'], require: true}
+  
   createSession: (request) ->
     md5sum = crypto.createHash('md5')
     md5sum.update(request.ip + @password + Date.now())
