@@ -32,8 +32,8 @@ class Place extends BaseModel
       if query.hasOwnProperty(t.name)
         types.push t.name
     conv = new Converter([query.Start, query.End])
-    @where('kind').in(types).exec (err, values) =>
-      polygon conv.getFlat()[0], conv.getFlat()[1], query.Radius, (values) =>
+    polygon conv.getFlat()[0], conv.getFlat()[1], query.Radius, (values) =>
+      @where('kind').in(types).exec (err, values) =>
         cb values
 
 module.exports = Place
