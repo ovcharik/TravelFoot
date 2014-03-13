@@ -12,11 +12,11 @@
         success: function(data) {
           if (data.success) {
             $form.trigger('reset');
-//to-do
-						$('#results').html("results");
+
+						$('#results').html(data.results);
 						$('#results_error').hide();
 						$('#results').show();
-//
+
 					} else {
 						var errString="Errors <br>";
 						for (var i=0; i<data.errors.length; i++){

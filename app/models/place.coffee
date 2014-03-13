@@ -1,3 +1,9 @@
+BaseModel = require ('./base')
+Converter = require ('../../libs/converter')
+polygon = require ('../helpers/buffer')
+config = require ('../../config')
+mongoose = require ('mongoose')
+
 class Place extends BaseModel
   
   @name = 'Place'
@@ -22,5 +28,15 @@ class Place extends BaseModel
     editor: { type: @ObjectId, ref: 'User' },
     tags:   [{ type: @ObjectId, ref: 'Tag' }]
   }
-  
+  				
+  @bufferSearch: (query)->
+    types=[]
+    for t in config.get("types")
+      if query.hasOwnProperty(t.name)
+        types.push t.name
+    #conv = new Converter([query.Start, query.End])
+    #polygon conv.getFlat()[0], conv.getFlat()[1], query.Radius, (poly)=>
+    @where('kind').in(types)
+      
+
 module.exports = Place
