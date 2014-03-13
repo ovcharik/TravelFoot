@@ -6,6 +6,9 @@ class Converter
   # sphPoints: array of points
   # point is array of type [lng, lat]
   constructor: (sphPoints) ->
+    if not (sphPoints[0] instanceof Array)
+      sphPoints = [sphPoints]
+    
     count = sphPoints.length
     decPoints = @deg2dec(sphPoints)
     
@@ -41,35 +44,35 @@ class Converter
   
   deg2rad: (degPoints) ->
     radPoints = new Array(degPoints.length)
-    for i of degPoints
-      for j of degPoints[i]
+    for q, i in degPoints
+      for q, j in degPoints[i]
         radPoints[i] = new Array(2) if not radPoints[i]
         radPoints[i][j] = Math.deg2rad degPoints[i][j]
     radPoints
   
   rad2deg: (radPoints) ->
     degPoints = new Array(radPoints.length)
-    for i of radPoints
-      for j of radPoints[i]
+    for q, i in radPoints
+      for q, j in radPoints[i]
         degPoints[i] = new Array(2) if not degPoints[i]
         degPoints[i][j] = Math.rad2deg radPoints[i][j]
     degPoints
   
   rad2dec: (radPoints) ->
     decPoints = new Array(radPoints.length)
-    for i of radPoints
+    for q, i in radPoints
       decPoints[i] = Math.sph2dec radPoints[i]
   
   dec2rad: (decPoints) ->
     radPoints = new Array(decPoints.length)
-    for i of radPoints
+    for q, i in radPoints
       radPoints[i] = Math.dec2sph decPoints[i]
   
   deg2dec: (degPoints) ->
     decPoints = new Array(degPoints.length)
     radPoints = new Array(degPoints.length)
-    for i of degPoints
-      for j of degPoints[i]
+    for q, i in degPoints
+      for q, j in degPoints[i]
         radPoints[i] = new Array(2) if not radPoints[i]
         radPoints[i][j] = Math.deg2rad degPoints[i][j]
       decPoints[i] = Math.sph2dec radPoints[i]
@@ -78,9 +81,9 @@ class Converter
   dec2deg: (decPoints) ->
     radPoints = new Array(decPoints.length)
     degPoints = new Array(decPoints.length)
-    for i of decPoints
+    for q, i in decPoints
       radPoints[i] = Math.dec2sph decPoints[i]
-      for j of radPoints[i]
+      for q, j in radPoints[i]
         degPoints[i] = new Array(2) if not degPoints[i]
         degPoints[i][j] = Math.rad2deg radPoints[i][j]
       degPoints[i].splice(2, 1)
@@ -88,7 +91,7 @@ class Converter
   
   dec2flat: (decPoints) ->
     flat = new Array(decPoints.length)
-    for i of decPoints
+    for q, i in decPoints
       flat[i] = new Array(2) if not flat[i]
       flat[i] = @baseI.mul(new Math.Vector3 decPoints[i]).trans().to_a()[0].slice(0, 2)
     flat
@@ -98,14 +101,14 @@ class Converter
   
   flat2dec: (flat) ->
     vPoints = new Array(flat.length)
-    for i of flat
-      for j of flat[i]
+    for q, i in flat
+      for q, j in flat[i]
         vPoints[i] = new Array(3) if not vPoints[i]
         vPoints[i][j] = flat[i][j]
       vPoints[i][2] = @z
     
     decPoints = new Array(vPoints.length)
-    for i of vPoints
+    for q, i in vPoints
       decPoints[i] = new Array(2) if not decPoints[i]
       decPoints[i] = @base.mul(new Math.Vector3 vPoints[i]).trans().to_a()[0]
     decPoints
@@ -126,3 +129,5 @@ class Converter
   # получение плоских точек из которых инициализировался массив
   getFlat: ->
     @flatPoints
+
+module.exports = Converter

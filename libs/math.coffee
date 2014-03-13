@@ -60,17 +60,17 @@ class Math.Matrix3
   
   trans: ->
     a = new Array(@columns)
-    for i of @value
-      for j of @value[i]
+    for q, i in @value
+      for q, j in @value[i]
         a[j] = new Array(@rows) if not a[j]
         a[j][i] = @value[i][j]
     new Math.Matrix3 a
   
   minor: (x, y) ->
     a = new Array(@rows - 1)
-    for i of @value when i != y
-      _i = if (i < y) then i else i - 1
-      for j of @value[i] when j != x
+    for q, i in @value when i != y
+      _i = if (i < y) then i else (i - 1)
+      for q, j in @value[i] when j != x
         _j = if (j < x) then j else j - 1
         a[_i] = new Array(@columns - 1) if not a[_i]
         a[_i][_j] = @value[i][j]
@@ -78,18 +78,18 @@ class Math.Matrix3
   
   minorMatrix: ->
     a = new Array(@rows)
-    for i of @value
-      for j of @value[i]
+    for q, i in @value
+      for q, j in @value[i]
         a[i] = new Array(@columns) if not a[i]
         a[i][j] = @minor(i, j)
     new Math.Matrix3 a
   
   cofactor: ->
     a = new Array(@rows)
-    for i of @value
-      for j of @value[i]
+    for q, i in @value
+      for q, j in @value[i]
         a[i] = new Array(@columns) if not a[i]
-        s = if ((Number(i) + Number(j) + 2) % 2) == 0 then 1 else -1
+        s = if ((i + j + 2) % 2) == 0 then 1 else -1
         a[i][j] = @minor(i, j) * s
     new Math.Matrix3 a
   
@@ -107,16 +107,16 @@ class Math.Matrix3
       if @columns != v.rows
         console.error "error: can't mul matrix", @, v
         throw "stop"
-      for i of @value
-        for j of v.value[i]
+      for q, i in @value
+        for q, j in v.value[i]
           s = 0
-          for k of @value[i]
+          for q, k in @value[i]
             s += @value[i][k] * v.value[k][j]
           a[i] = new Array(v.columns) if not a[i]
           a[i][j] = s
     else if (typeof(v) == "number")
-      for i of @value
-        for j of @value[i]
+      for q, i in @value
+        for q, j in @value[i]
           a[i] = new Array(@rows) if not a[i]
           a[i][j] = @value[i][j] * v
     else
@@ -162,7 +162,7 @@ class Math.Vector3
   normal: ->
     a = new Array(@value.length)
     m = @mod()
-    for i of @value
+    for q, i in @value
       a[i] = @value[i] / m
     new Math.Vector3 a
   

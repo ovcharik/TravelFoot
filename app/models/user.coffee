@@ -17,7 +17,7 @@ class User extends BaseModel
   
   @virtualAttributes 'confirm'
   
-  @validates 'email',    {
+  @validates 'email', {
     regexp:  [/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, 'not email'],
     require: [true, 'required'],
     unique:  [true, 'already exist']
