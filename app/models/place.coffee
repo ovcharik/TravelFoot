@@ -36,7 +36,8 @@ class Place extends BaseModel
         types.push t.name
     conv = new Converter([query.Start, query.End])
     polygon conv.getFlat()[0], conv.getFlat()[1], query.Radius, (values) =>
-      @where('kind').in(types).where('coord').within({polygon:values}).exec (err, values) ->
+      conv2 = new Converter(values)
+      @where('kind').in(types).where('coord').within({polygon:conv2.getFlat()}).exec (err, values) ->
         cb values
 
 module.exports = Place
