@@ -12,8 +12,11 @@
         success: function(data) {
           if (data.success) {
             $form.trigger('reset');
-
-						$('#results').html(data.results);
+            var output = []
+            for (var i in data.results){
+              output.push(data.results[i].name+'<br>')
+            }
+            $('#results').html(output);
 						$('#results_error').hide();
 						$('#results').show();
 

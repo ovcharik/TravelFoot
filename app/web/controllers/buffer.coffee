@@ -30,7 +30,8 @@ class BufferController extends ApplicationController
       
     json.errors = errors
     if errors.length==0
-      Place.bufferSearch {Radius:50, Start:[64.152,54.132], End:[52.34,31.215], Sight:on}, (results) =>
+      #Place.bufferSearch(@request.query)
+      Place.bufferSearch {Radius:250, Start:[62.403739, 55.166943], End:[61.403739, 54.453], place:on}, (results) =>
         json.results = results
         @response.json (json)
         @next()

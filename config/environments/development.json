@@ -21,16 +21,16 @@
   },
 
   "types": [
-  {"name":"Sight",
+  {"name":"sight",
    "query":["памятник","фонтан","статуя"]},
 
-  {"name": "Place",
+  {"name": "place",
   "query": ["парк","кладбище"]},
 
-  {"name":"Religion",
+  {"name":"religion",
    "query": ["мечеть","церковь","синагога"]},
   
-  {"name":"Culture",
+  {"name":"culture",
    "query":["музей","театр"]}
   ]
 }
