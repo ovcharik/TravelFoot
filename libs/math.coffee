@@ -1,4 +1,4 @@
-Math.EARTH_RADIUS = 3150
+Math.EARTH_RADIUS = 6300
 
 Math.rad2deg = (a) ->
   a / Math.PI * 180
@@ -37,6 +37,8 @@ Math.dec2sph = (x, y, z) ->
     Math.sqrt(x*x + y*y + z*z)
   ]
 
+Math.sqr = (x) ->
+  x * x
 
 class Math.Matrix3
   constructor: (value) ->

@@ -1,6 +1,3 @@
-polygon = require ('../helpers/buffer')
-config = require ('../../config')
-
 class Place extends BaseModel
   
   @name = 'Place'
@@ -8,7 +5,7 @@ class Place extends BaseModel
     name:        { type: String, required: true },
     description: { type: String },
     coord:       { type: [Number], index: '2dsphere', required: true },
-    kind:        { type: String },
+    kind:        { type: String, enum: ['sight', 'place', 'religion', 'culture'] },
     
     address: {
       city:   { type: String },
@@ -26,14 +23,15 @@ class Place extends BaseModel
     tags:   [{ type: @ObjectId, ref: 'Tag' }]
   }
   
-  @bufferSearch: (query, cb)->
-    types=[]
-    for t in config.get("types")
-      if query.hasOwnProperty(t.name)
-        types.push t.name
-    conv = new Converter([query.Start, query.End])
-    polygon conv.getFlat()[0], conv.getFlat()[1], query.Radius, (values) =>
-      @where('kind').in(types).exec (err, values) =>
-        cb values
+  @getKinds: ->
+    @schema.path('kind').enumValues
+  
+  @bufferSearch: (query, callback) ->
+    points = Polygon.createFromTwoPointAndRadiusDeg query.start, query.end, query.radius
+    @find {
+      kind : { $in: query.kinds },
+      coord: { $geoWithin: { $geometry: { type: "Polygon", coordinates: [points] } } }
+    }, (err, values) =>
+      callback err, values
 
 module.exports = Place

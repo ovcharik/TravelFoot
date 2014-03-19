@@ -6,5 +6,6 @@ require './array'
 
 global['Module']      = require './module'
 global['Converter']   = require './converter'
-global['require_dir'] = require './require_dir'
+global['Polygon']     = require './polygon'
 
+global['require_dir'] = require './require_dir'

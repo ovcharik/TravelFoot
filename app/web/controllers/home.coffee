@@ -1,11 +1,10 @@
 ApplicationController = require './application'
-config = require '../../../config'
 
 class HomeController extends ApplicationController
   
   index: ->
     @title = "Home"
-    @types = config.get("types")
+    @kinds = Place.getKinds()
     return true
 
 module.exports = HomeController

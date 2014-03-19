@@ -1,5 +1,6 @@
+
   $(function() {
-    $('#search-form').submit(function() {
+    return $('#search-form').submit(function() {
       var $button, $form;
       $form = $(this);
       $button = $('button[type=submit]', $form);
@@ -10,28 +11,20 @@
         data: $form.serialize(),
         dataFormat: 'JSON',
         success: function(data) {
-          if (data.success) {
-            $form.trigger('reset');
-
-						$('#results').html(data.results);
-						$('#results_error').hide();
-						$('#results').show();
-
-					} else {
-						var errString="Errors <br>";
-						for (var i=0; i<data.errors.length; i++){
-							errString+="<br>"+data.errors[i];
-						};
-						$('#results_error').html(errString);
-						$('#results').hide();
-						$('#results_error').show();
-					};
-				return $button.prop('disabled', false);
-				},
-				error: function() {
+          if (data.error) {
+            console.error(data.error);
+          } else {
+            console.log({
+              "result": data.results
+            });
+          }
           return $button.prop('disabled', false);
-				}
-      })
+        },
+        error: function(a, b, c) {
+          console.error(a, b, c);
+          return $button.prop('disabled', false);
+        }
+      });
       return false;
     });
-});
+  });
