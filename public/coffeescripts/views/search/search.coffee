@@ -1,8 +1,9 @@
 define [
   'collections/search',
+  'views/search/filters',
   'views/search/map',
   'views/search/search'
-], (SearchCollection, MapView, SearchView) ->
+], (SearchCollection, FiltersView, MapView, SearchView) ->
   
   class SearchView extends Backbone.View
     
@@ -17,8 +18,14 @@ define [
     header: "#header"
     
     initialize: ->
-      @mapView = new MapView
       @collection = new SearchCollection
+      
+      @mapView = new MapView {
+        collection: @collection
+      }
+      @filtersView = new FiltersView {
+        collection: @collection
+      }
       
       @$content = {
         $main: $(@content.main),
@@ -39,6 +46,8 @@ define [
     bindEvents: ->
       @$window.on 'resize', =>
         @onResize()
+      
+      @mapView.on 'change_route', @filtersView.changeRoute, @filtersView
     
     onResize: ->
       width = @$window.width()

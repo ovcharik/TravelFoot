@@ -28,10 +28,11 @@ class Place extends BaseModel
   
   @bufferSearch: (query, callback) ->
     points = Polygon.createFromTwoPointAndRadiusDeg query.start, query.end, query.radius
-    @find {
+    options = {
       kind : { $in: query.kinds },
       coord: { $geoWithin: { $geometry: { type: "Polygon", coordinates: [points] } } }
-    }, (err, values) =>
+    }
+    @find(options).populate(['tags', 'owner']).exec (err, values) =>
       callback err, values, points
 
 module.exports = Place

@@ -1,4 +1,6 @@
 requirejs.config
   baseUrl: '/javascripts'
   paths:
-    text: '/javascripts/text'
+    templates: '/templates'
+    text: '/javascripts/libs/text'
+

@@ -2,18 +2,18 @@ ApplicationController = require './application'
 
 class SearchController extends ApplicationController
   
-  defaultRadius: 300
+  defaultRadius: 0.5
   
   buffer:->
     kinds  = @params.kinds || Place.getKinds()
     radius = Number @params.radius || @defaultRadius
-    
-    console.log @params
+    start  = [(Number @params.start[0]), (Number @params.start[1])]
+    end    = [(Number @params.end[0]), (Number @params.end[1])]
     
     Place.bufferSearch {
       radius: radius,
-      start:  [64.152,54.132],
-      end:    [52.34,31.215],
+      start:  start,
+      end:    end,
       kinds:  kinds
     }, (err, results, polygon) =>
       @response.json results
