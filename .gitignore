@@ -8,3 +8,7 @@ npm-debug.log
 .idea/*
 public/uploads/*
 dump/
+
+public/javascripts/
+public/javascripts/*
+!public/javascripts/libs
