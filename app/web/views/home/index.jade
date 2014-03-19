@@ -7,6 +7,11 @@ block append javascripts
 
 block append content
   #main-columns.row
+    .col-sm-8.col-md-9.right.full-height
+      .panel.panel-default.full-height
+        .panel-body.full-height
+          #gmap.full-height(style="height:100%;width:100%;background:white")
+    
     .col-sm-4.col-md-3.left.full-height
       ul.nav.nav-tabs
         li.active
@@ -43,8 +48,4 @@ block append content
             .row.error#results_error
         if signedIn
           #history.tab-pane.fade
-    .col-sm-8.col-md-9.right.full-height
-      .panel.panel-default.full-height
-        .panel-body.full-height
-          #gmap.full-height(style="height:100%;width:100%;background:white")
 
