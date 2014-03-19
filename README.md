@@ -56,6 +56,9 @@ Dump монги находится в папке `/dump`.
 * Frontend
   - [Bootstrap](http://getbootstrap.com/) - типовые элементы интерфейса приложения
   - [jQuery](http://jquery.com/) - работа с DOM структурой документа
+  - [Backbone](http://backbonejs.org/) - библиотека для построения MVVM
+  - [Haml](http://haml.info/) - темплейты
+  - [Requirejs](http://requirejs.org/) - библиотека для загрузки скриптов в рантайме
 
 
 ## [Wiki](https://github.com/ovcharik/TravelFoot/wiki)
