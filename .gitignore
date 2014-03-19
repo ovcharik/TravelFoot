@@ -1,15 +1,26 @@
 node_modules/
-tmp/*
-logs/*
 npm-debug.log
+
 *.map
+
 .idea
 .idea/
 .idea/*
+
 public/uploads/*
-dump/
+!public/uploads/.gitkeep
+
+logs/*
+!logs/.gitkeep
+
+tmp/*
+!tmp/.gitkeep
 
 public/javascripts/*
 !public/javascripts/libs
+!public/javascripts/.gitkeep
 
 public/css/*
+!public/css/.gitkeep
+
+dump/
