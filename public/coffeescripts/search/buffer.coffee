@@ -15,7 +15,9 @@ $ ->
         if data.error
           console.error data.error
         else
-          console.log "result": data.results
+          console.log "result", data
+          if data.polygon
+            drawPolygon data.polygon
         $button.prop('disabled', false)
       
       error: (a, b, c) ->

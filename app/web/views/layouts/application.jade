@@ -10,15 +10,14 @@ html
     link(rel="stylesheet", href="/css/main-page.css")
     block stylesheets
     
-    script(src="/javascripts/jquery.min.js")
-    script(src="/javascripts/bootstrap.min.js")
+    script(src="/javascripts/libs/jquery.min.js")
+    script(src="/javascripts/libs/underscore.min.js")
+    script(src="/javascripts/libs/bootstrap.min.js")
+    script(src="/javascripts/libs/backbone.min.js")
+    script(src="/javascripts/libs/require.min.js")
     
+    script(src="/javascripts/application.js")
     script(src="/javascripts/auth.js")
-    script(src="/javascripts/main-page.js")
-    script(src="/javascripts/buffer.js")
-    
-    script(src="/javascripts/calc.js")
-    script(src="/javascripts/polygon.js")
     block javascripts
     
     title= title || (controller + '/' + action)

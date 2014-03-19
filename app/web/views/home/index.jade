@@ -1,5 +1,10 @@
 extends /layouts/application
 
+block append javascripts
+  script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true")
+  
+  script(src="/javascripts/search/search.js")
+
 block append content
   #main-columns.row
     .col-sm-4.col-md-3.left.full-height
@@ -26,6 +31,10 @@ block append content
             .form-group
               label(for="buffer-radius") Radius
               input#buffer-radius.form-control(type="text", name="radius")
+            input#start-0(type="hidden", name="start[0]")
+            input#start-1(type="hidden", name="start[1]")
+            input#end-0(type="hidden", name="end[0]")
+            input#end-1(type="hidden", name="end[1]")
             button.btn.btn-default(type="submit") Apply
           
           .container-fluid
@@ -35,24 +44,7 @@ block append content
         if signedIn
           #history.tab-pane.fade
     .col-sm-8.col-md-9.right.full-height
-      .panel.panel-default.full-height(style="background:#eee")
-        .panel-body
-          canvas#canvas(width="300", height="300", style="float: right; border:1px solid black; background: white")
-          | lng1
-          input#lng1(value="56.519351837305")
-          br
-          | lat1
-          input#lat1(value="52.992553710938")
-          br
-          br
-          | lng2
-          input#lng2(value="57.519351837305")
-          br
-          | lat2
-          input#lat2(value="53.992553710938")
-          br
-          br
-          input#calc(type="button", value="calc")
-          br
-          br
+      .panel.panel-default.full-height
+        .panel-body.full-height
+          #gmap.full-height(style="height:100%;width:100%;background:white")
 

@@ -32,6 +32,6 @@ class Place extends BaseModel
       kind : { $in: query.kinds },
       coord: { $geoWithin: { $geometry: { type: "Polygon", coordinates: [points] } } }
     }, (err, values) =>
-      callback err, values
+      callback err, values, points
 
 module.exports = Place

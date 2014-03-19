@@ -28,11 +28,13 @@
     }
   ],
   
-  "/buffer": {
+  
+  "/search/buffer": {
     "method"    : "get",
-    "controller": "buffer",
-    "action"    : "index"
+    "controller": "search",
+    "action"    : "buffer"
   },
+  
   
   "/sights/(:page)?": {
     "method"    : "get",
