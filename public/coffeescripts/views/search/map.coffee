@@ -71,8 +71,8 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
     updateRoute: (point) ->
       s = @routeStates
       if s.start and s.end
-        s.start.setMap null
-        s.end.setMap null
+        s.start.setMap null if s.start.setMap
+        s.end.setMap null if s.end.setMap
         s.start = s.end = false
         
         @dirDisplay.setMap null
@@ -97,7 +97,6 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
         @trigger 'change_route', 'start', [point.latLng.lng(), point.latLng.lat()]
     
     setDirection: (start, end) ->
-      console.log start, end
       start = new google.maps.LatLng(start[1], start[0])
       end   = new google.maps.LatLng(end[1], end[0])
       @updateDirection start, end
@@ -118,6 +117,8 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
             
             @routeStates.start.setMap(null) if @routeStates.start
             @routeStates.end.setMap(null)   if @routeStates.end
+            @routeStates.start = true
+            @routeStates.end = true
     
     drawPolygon: (points) ->
       if @polygon
