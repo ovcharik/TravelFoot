@@ -25,6 +25,9 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
       @initGmap()
       @bindEvents()
     
+    run: ->
+      return
+    
     bindEvents: ->
       @collection.on 'sync', @updateMarkers, @
       google.maps.event.addListener @gmap, 'click', (point) =>
@@ -73,6 +76,7 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
         s.start = s.end = false
         
         @dirDisplay.setMap null
+        @polygon.setMap null
         @clearMarkers()
       else if s.start and not s.end
         s.end = new google.maps.Marker {
@@ -92,18 +96,28 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
         }
         @trigger 'change_route', 'start', [point.latLng.lng(), point.latLng.lat()]
     
-    updateDirection: ->
-      if @routeStates.start and @routeStates.end
+    setDirection: (start, end) ->
+      console.log start, end
+      start = new google.maps.LatLng(start[1], start[0])
+      end   = new google.maps.LatLng(end[1], end[0])
+      @updateDirection start, end
+    
+    updateDirection: (start, end) ->
+      s = start || (@routeStates.start && @routeStates.start.get('position'))
+      e = end   || (@routeStates.end   && @routeStates.end.get('position'))
+      
+      if s and e
         @dirService.route {
-          origin     : @routeStates.start.get('position'),
-          destination: @routeStates.end.get('position'),
+          origin     : s,
+          destination: e,
           travelMode : google.maps.TravelMode.WALKING
         }, (result, status) =>
           if status == google.maps.DirectionsStatus.OK
             @dirDisplay.setDirections result
             @dirDisplay.setMap @gmap
-            @routeStates.start.setMap(null)
-            @routeStates.end.setMap(null)
+            
+            @routeStates.start.setMap(null) if @routeStates.start
+            @routeStates.end.setMap(null)   if @routeStates.end
     
     drawPolygon: (points) ->
       if @polygon
@@ -113,7 +127,7 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
       for point in points
         coords.push new google.maps.LatLng(point[1], point[0])
       
-      options: {
+      options = {
         paths: coords,
         strokeColor: '#FF0000',
         strokeOpacity: 0.8,
@@ -123,4 +137,4 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
       }
       
       @polygon = new google.maps.Polygon options
-      @polygon.setMap(map)
+      @polygon.setMap @gmap

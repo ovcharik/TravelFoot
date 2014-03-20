@@ -19,7 +19,9 @@ class BaseAbility
       if inst and abil.options
         result = true
         for key, value of abil.options
-          result &&= (model[key] == value)
+          v = model[key]
+          v = v._id || v
+          result &&= (value.equals(v))
         return result
       else if abil.options
         return false

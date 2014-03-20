@@ -41,13 +41,22 @@ define [
       @$window = $(window)
       
       @bindEvents()
-      @onResize()
+      @run()
     
     bindEvents: ->
       @$window.on 'resize', =>
         @onResize()
       
       @mapView.on 'change_route', @filtersView.changeRoute, @filtersView
+      
+      @filtersView.on 'update_polygon', @mapView.drawPolygon, @mapView
+      @filtersView.on 'update_path', @mapView.setDirection, @mapView
+    
+    run: ->
+      @filtersView.run()
+      @mapView.run()
+      
+      @onResize()
     
     onResize: ->
       width = @$window.width()

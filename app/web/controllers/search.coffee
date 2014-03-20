@@ -16,7 +16,10 @@ class SearchController extends ApplicationController
       end:    end,
       kinds:  kinds
     }, (err, results, polygon) =>
-      @response.json results
+      @response.json {
+        models: results,
+        polygon: polygon
+      }
       @next()
     return false
 

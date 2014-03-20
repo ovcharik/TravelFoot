@@ -16,7 +16,11 @@ define ['views/search/filters'], (FiltersView) ->
       ]
       
       @bindEvents()
+      return
+    
+    run: ->
       @submit()
+      @trigger 'update_path', [Number(@$start[0].val()), Number(@$start[1].val())], [Number(@$end[0].val()), Number(@$end[1].val())]
     
     bindEvents: ->
       @$el.on 'submit', =>
@@ -30,7 +34,10 @@ define ['views/search/filters'], (FiltersView) ->
       @collection.params = params
       @collection.action = action
       
-      @collection.fetch()
+      @collection.fetch
+        modelsPath: 'models'
+        success: (collection, resp, options) =>
+          @trigger 'update_polygon', resp.polygon
     
     submit: ->
       @$el.trigger 'submit'

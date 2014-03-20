@@ -13,7 +13,12 @@ class Polygon
     
     start = start % (2 * Math.PI)
     end   = end   % (2 * Math.PI)
-    step  = Math.abs(step)
+    
+    stepObj = (typeof(step) == 'object')
+    if stepObj
+      step.angle = Math.abs(step.angle)
+    else
+      step = Math.abs(step)
     
     end += Math.PI * 2 if start > end
     
@@ -23,12 +28,17 @@ class Polygon
     result = []
     
     a = start
-    while a <= end
+    i = 0
+    while (not stepObj and a <= end) or (stepObj and i <= step.count)
       result.push [
         center[0] + radius * Math.cos(a),
         center[1] + radius * Math.sin(a),
       ]
-      a += step
+      if stepObj
+        a += step.angle
+        i += 1
+      else
+        a += step
     
     result
   
@@ -37,9 +47,12 @@ class Polygon
     
     s = angle + Math.PI / 2
     e = s + Math.PI
-    step = Math.abs((e - s) / 3)
+    step = {
+      angle: Math.abs((e - s) / 3),
+      count: 3
+    }
     
-    if start[0] > end[0] and start[1] > end[1]
+    if start[0] > end[0]
       start = [start, end]
       end   = start[0]
       start = start[1]
