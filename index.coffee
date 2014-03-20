@@ -7,6 +7,7 @@ Http          = require 'http'
 
 libs = require './libs'
 helpers = require './app/helpers'
+abilities = require './app/abilities'
 
 # app requie
 Socket   = require './app/socket'

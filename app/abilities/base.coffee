@@ -1,9 +1,35 @@
-class Ability
+class BaseAbility
   
   _abilities: { }
   
+  constructor: (model) ->
+    @intitalize(model)
+  
+  intitalize: ->
+    false
+  
+  check: (action, model) ->
+    inst = typeof(model) != 'function'
+    act  = @_getAction(action)
+    abil = _.find(act, (a) ->
+      inst and (model instanceof a.model) or model == a.model
+    )
+    
+    if abil
+      if inst and abil.options
+        result = true
+        for key, value of abil.options
+          result &&= (model[key] == value)
+        return result
+      else if abil.options
+        return false
+      else
+        return true
+    else
+      return false
+  
   can: (actions, models, options) ->
-    if actions instanceof String
+    if typeof actions == 'string'
       if actions == "manage"
         actions = ["create", "update", "read", "delete"]
       else
@@ -29,3 +55,5 @@ class Ability
     if not @_abilities[action]
       @_abilities[action] = []
     @_abilities[action]
+
+module.exports = BaseAbility

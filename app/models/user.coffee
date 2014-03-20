@@ -1,11 +1,14 @@
 crypto = require 'crypto'
 
 class User extends BaseModel
+  @include MixinAbility
+  @abilityName = 'UserAbility'
   
   @name = 'User'
   @schema = {
     email:    { type: String, unique: true },
     password: { type: String },
+    role:     { type: String, enum: ['admin', 'user'], default: 'user' },
     sessions: [{
       ip:   { type: String },
       ua:   { type: String },
@@ -67,5 +70,8 @@ class User extends BaseModel
     if flag
       @save()
     return flag
+  
+  isAdmin: ->
+    @role == 'admin'
   
 module.exports = User
