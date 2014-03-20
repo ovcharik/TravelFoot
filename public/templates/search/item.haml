@@ -1,0 +1,9 @@
+- var url = "/sights/show/" + sight.get('_id')
+- var img = sight.get('images')[0]
+- img = img && (img.url + "-small." + img.ext) || "/images/nophoto-small.png"
+%li.list-group-item
+  %a.clearfix{href: url}
+    %img{src: img, width: "60", height: "60", style: "float: left; margin-right: 10px"}
+    %div{style: "overflow: hidden"}
+      %p
+        = sight.get('name')

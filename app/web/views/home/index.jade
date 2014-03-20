@@ -16,6 +16,8 @@ block append content
       ul.nav.nav-tabs
         li.active
           a(href="#search", data-toggle="tab") Search
+        li
+          a(href="#results", data-toggle="tab") Results
         if signedIn
           li
             a(href="#history", data-toggle="tab") History
@@ -41,11 +43,18 @@ block append content
             input#end-0(type="hidden", name="end[0]", value="61.39915466308594")
             input#end-1(type="hidden", name="end[1]", value="55.18376843493298")
             button.btn.btn-default(type="submit") Apply
-          
+        
+        #results.tab-pane.fade
           .container-fluid
-            h3 Results
-            .row#results
-            .row.error#results_error
+            .row
+              p
+                | Found: 
+                b#results-total
+            .row
+              ul#results-list.list-group
+            .row
+              button#results-more.btn.btn-default.btn-block More results
+        
         if signedIn
           #history.tab-pane.fade
 

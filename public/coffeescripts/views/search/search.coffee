@@ -1,9 +1,10 @@
 define [
   'collections/search',
   'views/search/filters',
+  'views/search/results',
   'views/search/map',
   'views/search/search'
-], (SearchCollection, FiltersView, MapView, SearchView) ->
+], (SearchCollection, FiltersView, ResultsView, MapView, SearchView) ->
   
   class SearchView extends Backbone.View
     
@@ -20,12 +21,12 @@ define [
     initialize: ->
       @collection = new SearchCollection
       
-      @mapView = new MapView {
+      opt = {
         collection: @collection
       }
-      @filtersView = new FiltersView {
-        collection: @collection
-      }
+      @mapView     = new MapView     opt
+      @filtersView = new FiltersView opt
+      @resultsView = new ResultsView opt
       
       @$content = {
         $main: $(@content.main),
@@ -54,6 +55,7 @@ define [
     
     run: ->
       @filtersView.run()
+      @resultsView.run()
       @mapView.run()
       
       @onResize()

@@ -2,10 +2,12 @@ define ['views/search/filters'], (FiltersView) ->
   class FiltersView extends Backbone.View
     
     el: "#search-form"
+    tab: "a[href='#search']"
     
     initialize: (options) ->
       @collection = options.collection
       
+      @$tab = $(@tab)
       @$start = [
         $("#start-0"),
         $("#start-1")
@@ -21,6 +23,9 @@ define ['views/search/filters'], (FiltersView) ->
     run: ->
       @submit()
       @trigger 'update_path', [Number(@$start[0].val()), Number(@$start[1].val())], [Number(@$end[0].val()), Number(@$end[1].val())]
+    
+    show: ->
+      @$tab.tab('show')
     
     bindEvents: ->
       @$el.on 'submit', =>
