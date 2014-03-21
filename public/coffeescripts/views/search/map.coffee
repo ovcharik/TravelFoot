@@ -18,6 +18,8 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
       end:   false
     }
     
+    markerZIndex: 0
+    
     initialize: (options) ->
       @collection = options.collection
       @markerTemplate = Haml marker_tpl
@@ -46,6 +48,7 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
         for m in @markers
           google.maps.event.clearListeners m
           m.setMap null
+        @markerZIndex = 0
     
     updateMarkers: ->
       @clearMarkers()
@@ -56,7 +59,8 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
         marker = new google.maps.Marker {
           position: new google.maps.LatLng(coord[1], coord[0]),
           map: @gmap,
-          title: sight.get('name')
+          title: sight.get('name'),
+          zIndex: @markerZIndex
         }
         
         wnd = new google.maps.InfoWindow {
@@ -67,6 +71,20 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
             wnd.open map, marker
         )(wnd, @gmap, marker)
         @markers.push marker
+        sight.marker = marker
+        @markerZIndex += 1
+    
+    onMarker: (sight) ->
+      if sight and sight.marker
+        @markerZIndex += 1
+        marker = sight.marker
+        marker.setAnimation(google.maps.Animation.BOUNCE)
+        setTimeout (->
+          marker.setAnimation(null)
+        ), 1500
+        @gmap.panTo marker.getPosition()
+        @gmap.setZoom 14
+        marker.setZIndex @markerZIndex
     
     updateRoute: (point) ->
       s = @routeStates

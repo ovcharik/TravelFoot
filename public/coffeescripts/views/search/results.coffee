@@ -29,6 +29,11 @@ define ['text!templates/search/item.haml', 'views/search/results'], (item_tpl, R
     bindEvents: ->
       @collection.on 'sync', @collectionSync, @
       
+      @$list.on 'mouseenter', '.result-item', (event) =>
+        @trigger 'item_mouseenter', @collection.get($(event.target).attr('data-id'))
+      @$list.on 'mouseleave', '.result-item', (event) =>
+        @trigger 'item_mouseleave', @collection.get($(event.target).attr('data-id'))
+      
       @$more.on 'click', =>
         @render()
     
@@ -55,7 +60,8 @@ define ['text!templates/search/item.haml', 'views/search/results'], (item_tpl, R
       i = start
       while i < end
         model = @collection.models[i]
-        @$list.append @itemTemplate({ sight: model })
+        model.$html = $(@itemTemplate({ sight: model }))
+        @$list.append model.$html
         i++
     
     collectionSync: ->

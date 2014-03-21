@@ -52,6 +52,8 @@ define [
       
       @filtersView.on 'update_polygon', @mapView.drawPolygon, @mapView
       @filtersView.on 'update_path', @mapView.setDirection, @mapView
+      
+      @resultsView.on 'item_mouseenter', @mapView.onMarker, @mapView
     
     run: ->
       @filtersView.run()
