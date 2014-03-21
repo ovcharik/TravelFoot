@@ -42,7 +42,7 @@ mixin paginator(p)
     
     - for (var i = start; i <= end; i++)
       - var r = {value: i}
-      - if (i == page) r.class = "active"
+      - if (i == page) { r.class = "active"; r.value = false; r.text = i }
       - render.push(r)
     
     if end < pages
