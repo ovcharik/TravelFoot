@@ -12,7 +12,7 @@ class SightsController extends ApplicationController
     @pagination = {
       page: @page,
       per:  @per,
-      path: "/sights"
+      path: "/sights/page"
     }
     
     @kinds = @params.kinds || Place.getKinds()
@@ -28,5 +28,30 @@ class SightsController extends ApplicationController
         @places = places
         @next()
     return false
+  
+  new: ->
+    console.log 'new', @params['id']
+    return true
+  
+  edit: ->
+    console.log 'edit', @params['id']
+    return true
+  
+  show: ->
+    console.log 'show', @params['id']
+    return false
+  
+  create: ->
+    console.log 'create', @params
+    sight = new Place(@params['sights'])
+    
+    @render "sights/show"
+    return true
+  
+  update: ->
+    console.log 'update', @params['id'], @params['sight']
+    
+    @render "sights/show"
+    return true
 
 module.exports = SightsController

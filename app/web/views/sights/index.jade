@@ -9,31 +9,37 @@ block append stylesheets
 block append content
   .row
     .col-sm-4
-      #sights-sidebar(data-spy="affix", data-offset-top="50", data-offset-bottom="60")
-        .panel.panel-primary
-          .panel-heading
-            h3.panel-title Info
-          .panel-body
-            p
-              | Found objects: 
-              b=pagination.total
-            form#search-form(role="form", action="/sights", method = "GET")
-              .form-group
-                label(for="search-city") Number items per page:
-                select#search-city.form-control(name="per")
-                  - var pers = [10, 20, 50, 100]
-                  - for (var i = 0; i < pers.length; i++)
-                    - var p = pers[i]
-                    option(selected=(per==p), value=p)=p
-              .form-group
-                label Kinds:
-                - for (var i = 0; i < allKinds.length; i++)
-                  - var kind = allKinds[i]
-                  .checkbox
-                    label
-                      input(checked=(kinds.indexOf(kind)!=-1 && !kindsSelected), type="checkbox", name="kinds[]", value=kind)
-                      = kind.capitalize()
-              button.btn.btn-default(type="submit") Apply
+      #sights-sidebar.container-fluid(data-spy="affix", data-offset-top="50", data-offset-bottom="60")
+        if currentUser && currentUser.can('create', Place)
+        .row(style="margin-bottom:20px")
+          a.btn.btn-lg.btn-primary.btn-block(href="/sights/new")
+            | New sight
+        
+        .row
+          .panel.panel-primary
+            .panel-heading
+              h3.panel-title Info
+            .panel-body
+              p
+                | Found objects: 
+                b=pagination.total
+              form#search-form(role="form", action="/sights", method = "GET")
+                .form-group
+                  label(for="search-city") Number items per page:
+                  select#search-city.form-control(name="per")
+                    - var pers = [10, 20, 50, 100]
+                    - for (var i = 0; i < pers.length; i++)
+                      - var p = pers[i]
+                      option(selected=(per==p), value=p)=p
+                .form-group
+                  label Kinds:
+                  - for (var i = 0; i < allKinds.length; i++)
+                    - var kind = allKinds[i]
+                    .checkbox
+                      label
+                        input(checked=(kinds.indexOf(kind)!=-1 && !kindsSelected), type="checkbox", name="kinds[]", value=kind)
+                        = kind.capitalize()
+                button.btn.btn-default(type="submit") Apply
             
     .col-sm-8
       - each place in places

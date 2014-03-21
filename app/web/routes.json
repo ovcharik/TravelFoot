@@ -35,10 +35,41 @@
     "action"    : "buffer"
   },
   
-  
-  "/sights/(:page)?": {
+  "/sights/new/:id": {
+    "method"    : "get",
+    "controller": "sights",
+    "action"    : "new"
+  },
+  "/sights/edit/:id": {
+    "method"    : "get",
+    "controller": "sights",
+    "action"    : "edit"
+  },
+  "/sights/(page/(:page))?": {
     "method"    : "get",
     "controller": "sights",
     "action"    : "index"
-  }
+  },
+  "/sights": {
+    "method"    : "post",
+    "controller": "sights",
+    "action"    : "create"
+  },
+  "/sights/:id": [
+    {
+      "method"    : "get",
+      "controller": "sights",
+      "action"    : "show"
+    },
+    {
+      "method"    : "put",
+      "controller": "sights",
+      "action"    : "update"
+    },
+    {
+      "method"    : "delete",
+      "controller": "sights",
+      "action"    : "destroy"
+    }
+  ]
 }
