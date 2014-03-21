@@ -3,4 +3,3 @@ requirejs.config
   paths:
     templates: '/templates'
     text: '/javascripts/libs/text'
-

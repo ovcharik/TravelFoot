@@ -16,7 +16,7 @@ class SightsController extends ApplicationController
     Place.find().count (err, count) =>
       @pagination.total = count
       
-      Place.find().sort({_id: 1}).limit(@per).skip((@page - 1) * 10).populate('tags').exec (err, places) =>
+      Place.find().sort({_id: 1}).limit(@per).skip((@page - 1) * @per).populate('tags').exec (err, places) =>
         @places = places
         @next()
     return false

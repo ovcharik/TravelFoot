@@ -7,7 +7,7 @@ mixin paginator(p)
     - var text = v.text || v.value
     li(class=c)
       if url
-        a(href=url)=text
+        a(href=url, params_safe="true")=text
       else
         span=text
     
