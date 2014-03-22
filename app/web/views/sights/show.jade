@@ -11,7 +11,7 @@ block append content
     .container-fluid
       .row
         h1= sight.name
-          if currentUser.can('update', sight)
+          if currentUser && currentUser.can('update', sight)
             a.pull-right(href="/sights/edit/"+sight._id)
               i.fa.fa-edit
       
