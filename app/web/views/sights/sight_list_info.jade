@@ -1,8 +1,10 @@
 mixin sightListInfo(sight)
   ul.fa-ul
-    li
-      i.fa.fa-li.fa-building-o
-      = sight.formatedAddress()
+    - var addr = sight.formatedAddress()
+    if addr
+      li
+        i.fa.fa-li.fa-building-o
+        = addr
     li
       i.fa.fa-li.fa-globe
       = sight.coord.join(", ")

@@ -32,15 +32,15 @@ class SightsController extends ApplicationController
     return false
   
   new: ->
-    console.log 'new', @params['id']
+    if not @currentUser or not @currentUser.can('create', Place)
+      @render "errors/permission_denied"
     return true
   
   edit: ->
     if not @sight
       @render "errors/not_found"
-      return true
-    
-    console.log 'edit', @params['id']
+    if not @currentUser or not @currentUser.can('update', @sight)
+      @render "errors/permission_denied"
     return true
   
   show: ->
@@ -50,9 +50,11 @@ class SightsController extends ApplicationController
     return true
   
   create: ->
-    console.log 'create', @params
-    sight = new Place(@params['sights'])
-    
+    if not @currentUser or not @currentUser.can('create', Place)
+      @render "errors/permission_denied"
+      return true
+    @sight = new Place(@params['sights'])
+    #TODO
     @render "sights/show"
     return true
   
@@ -60,8 +62,10 @@ class SightsController extends ApplicationController
     if not @sight
       @render "errors/not_found"
       return true
-    
-    console.log 'update', @params['id'], @params['sight']
+    if not @currentUser or not @currentUser.can('update', @sight)
+      @render "errors/permission_denied"
+      return true
+    #TODO
     @render "sights/show"
     return true
   
