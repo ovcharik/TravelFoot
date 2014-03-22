@@ -45,6 +45,11 @@
     "controller": "sights",
     "action"    : "edit"
   },
+  "/sights/delete/:id": {
+    "method"    : "get",
+    "controller": "sights",
+    "action"    : "destroy"
+  },
   "/sights/(page/(:page))?": {
     "method"    : "get",
     "controller": "sights",
@@ -65,11 +70,6 @@
       "method"    : "put",
       "controller": "sights",
       "action"    : "update"
-    },
-    {
-      "method"    : "delete",
-      "controller": "sights",
-      "action"    : "destroy"
     }
   ]
 }

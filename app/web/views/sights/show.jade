@@ -10,10 +10,14 @@ block append content
   .col-sm-8.col-sm-offset-2
     .container-fluid
       .row
-        h1= sight.name
-          if currentUser && currentUser.can('update', sight)
-            a.pull-right(href="/sights/edit/"+sight._id)
-              i.fa.fa-edit
+        h1= sight.name.capitalize()
+          span.pull-right
+            if currentUser && currentUser.can('update', sight)
+              a(href="/sights/edit/"+sight._id)
+                i.fa.fa-edit.fa-fw.fa-lg
+            if currentUser && currentUser.can('delete', sight)
+              a(href="/sights/delete/"+sight._id, data-confirm="You a sure?")
+                i.fa.fa-times.fa-fw.fa-lg
       
       .row.top-buffer
         - var cid = "carousel-" + sight._id

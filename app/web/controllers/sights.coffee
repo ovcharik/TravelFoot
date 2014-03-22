@@ -2,7 +2,7 @@ ApplicationController = require './application'
 
 class SightsController extends ApplicationController
   
-  @beforeFilter 'selectSight', {only: ['show', 'edit', 'update']}
+  @beforeFilter 'selectSight', {only: ['show', 'edit', 'update', 'destroy']}
   
   index: ->
     @title = "Places"
@@ -36,10 +36,17 @@ class SightsController extends ApplicationController
     return true
   
   edit: ->
+    if not @sight
+      @render "errors/not_found"
+      return true
+    
     console.log 'edit', @params['id']
     return true
   
   show: ->
+    if not @sight
+      @render "errors/not_found"
+      return true
     return true
   
   create: ->
@@ -50,10 +57,27 @@ class SightsController extends ApplicationController
     return true
   
   update: ->
-    console.log 'update', @params['id'], @params['sight']
+    if not @sight
+      @render "errors/not_found"
+      return true
     
+    console.log 'update', @params['id'], @params['sight']
     @render "sights/show"
     return true
+  
+  destroy: ->
+    if not @sight
+      @render "errors/not_found"
+      return true
+    
+    if @currentUser and @currentUser.can('delete', @sight)
+      @sight.remove (err, sight) =>
+        @response.redirect 'back'
+        @next()
+      return false
+    else
+      @render "errors/permission_denied"
+      return true
   
   # filters
   selectSight: ->

@@ -3,32 +3,37 @@ include /sights/sight_list_info
 mixin sight(sight)
   .panel.panel-default
     .panel-heading
-      h3.panel-title
+      h3.panel-title.text-primary
         a(href="/sights/"+sight._id)
           = sight.name.capitalize()
-        if currentUser && currentUser.can('update', sight)
-          a.pull-right(href="/sights/edit/"+sight._id)
-            i.fa.fa-edit.fa-lg
-    .panel-body
-      - var cid = "carousel-" + sight._id
-      .carousel.slide.col-sm-5(id=cid, data-ride="carousel", data-interval="false")
-        - count = sight.images.length
-        .carousel-inner
-          - var first = true
-          if count == 0
-            - sight.images.push({url: "/images/nophoto", ext: "png"})
-          - each img in sight.images
-            .item(class=(first?"active":""))
-              - var url = img.url + "-middle." + img.ext
-              img(src=url, width="100%")
-            - first = false
+        span.pull-right
+          if currentUser && currentUser.can('update', sight)
+            a(href="/sights/edit/"+sight._id)
+              i.fa.fa-edit.fa-fw.fa-lg
+          if currentUser && currentUser.can('delete', sight)
+            a(href="/sights/delete/"+sight._id, data-confirm="You a sure?")
+              i.fa.fa-times.fa-fw.fa-lg
+    .panel-body.row
+      .col-sm-5
+        - var cid = "carousel-" + sight._id
+        .carousel.slide(id=cid, data-ride="carousel", data-interval="false")
+          - count = sight.images.length
+          .carousel-inner
+            - var first = true
+            if count == 0
+              - sight.images.push({url: "/images/nophoto", ext: "png"})
+            - each img in sight.images
+              .item(class=(first?"active":""))
+                - var url = img.url + "-middle." + img.ext
+                img(src=url, width="100%")
+              - first = false
+          
+          if count > 1
+            a.left.carousel-control(href="#"+cid, data-slide="prev")
+              span.glyphicon.glyphicon-chevron-left
+            a.right.carousel-control(href="#"+cid, data-slide="next")
+              span.glyphicon.glyphicon-chevron-right
         
-        if count > 1
-          a.left.carousel-control(href="#"+cid, data-slide="prev")
-            span.glyphicon.glyphicon-chevron-left
-          a.right.carousel-control(href="#"+cid, data-slide="next")
-            span.glyphicon.glyphicon-chevron-right
-      
       .col-sm-7
         p
           = sight.description
