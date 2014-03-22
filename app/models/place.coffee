@@ -23,6 +23,10 @@ class Place extends BaseModel
     tags:   [{ type: @ObjectId, ref: 'Tag' }]
   }
   
+  formatedAddress: ->
+    addr = [@address.city, @address.street, @address.house]
+    _.compact(addr).join(", ")
+  
   @getKinds: ->
     @schema.path('kind').enumValues
   

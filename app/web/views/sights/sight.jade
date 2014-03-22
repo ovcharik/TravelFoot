@@ -1,8 +1,10 @@
+include /sights/sight_list_info
+
 mixin sight(sight)
   .panel.panel-default
     .panel-heading
       h3.panel-title
-        a(href="/sights/show/"+sight._id)
+        a(href="/sights/"+sight._id)
           = sight.name.capitalize()
         if currentUser && currentUser.can('update', sight)
           a.pull-right(href="/sights/edit/"+sight._id)
@@ -31,22 +33,4 @@ mixin sight(sight)
         p
           = sight.description
     .panel-footer
-      ul.fa-ul
-        li
-          i.fa.fa-li.fa-building-o
-          = sight.address.city
-          = ((sight.address.city && sight.address.street) && ", " || " ")
-          = sight.address.street
-          = ((sight.address.street && sight.address.house) && ", " || " ")
-          = sight.address.house
-        li
-          i.fa.fa-li.fa-globe
-          = sight.coord.join(", ")
-        li
-          i.fa.fa-li.fa-tags
-          - for (var i = 0; i < sight.tags.length; i++)
-            - tag = sight.tags[i]
-            //a(href="/sights", params_safe="true", params_add="tag="+tag._id)=tag.value
-            =tag.value
-            if i != sight.tags.length - 1
-              | ,&nbsp;
+      +sightListInfo(sight)

@@ -65,7 +65,7 @@ class BaseController extends Module
   # private
   _addFilter = (filters, name, options) ->
     options ||= {}
-    if (options.only and opitions.except)
+    if (options.only and options.except)
       throw "You can't define only and except for controller filter"
     
     if not @_filters

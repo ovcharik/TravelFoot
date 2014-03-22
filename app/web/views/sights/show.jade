@@ -1,4 +1,48 @@
 extends /layouts/application
 
+include /sights/sight_list_info
+
+block append javascripts
+  script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true")
+  script(src="/javascripts/sights/show.js")
+
 block append content
-  h1 Show sight
+  .col-sm-8.col-sm-offset-2
+    .container-fluid
+      .row
+        h1= sight.name
+          if currentUser.can('update', sight)
+            a.pull-right(href="/sights/edit/"+sight._id)
+              i.fa.fa-edit
+      
+      .row.top-buffer
+        - var cid = "carousel-" + sight._id
+        .carousel.slide(id=cid, data-ride="carousel")
+          - count = sight.images.length
+          .carousel-inner
+            - var first = true
+            if count == 0
+              - sight.images.push({url: "/images/nophoto", ext: "png"})
+            - each img in sight.images
+              .item(class=(first?"active":""))
+                - var url = img.url + "." + img.ext
+                img(src=url, width="100%")
+              - first = false
+          if count > 1
+            a.left.carousel-control(href="#"+cid, data-slide="prev")
+              span.glyphicon.glyphicon-chevron-left
+            a.right.carousel-control(href="#"+cid, data-slide="next")
+              span.glyphicon.glyphicon-chevron-right
+      
+      .row
+        h3 Description
+        p= sight.description
+      
+      .row
+        h3 Info
+      
+    .row.top-buffer
+      .col-sm-8
+        #map.thumbnail(style="height: 300px", data-lng=sight.coord[0], data-lat=sight.coord[1])
+      .col-sm-4
+        +sightListInfo(sight)

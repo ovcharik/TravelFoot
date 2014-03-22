@@ -2,6 +2,8 @@ ApplicationController = require './application'
 
 class SightsController extends ApplicationController
   
+  @beforeFilter 'selectSight', {only: ['show', 'edit', 'update']}
+  
   index: ->
     @title = "Places"
     @page  = @params['page'] || 1
@@ -38,8 +40,7 @@ class SightsController extends ApplicationController
     return true
   
   show: ->
-    console.log 'show', @params['id']
-    return false
+    return true
   
   create: ->
     console.log 'create', @params
@@ -53,5 +54,16 @@ class SightsController extends ApplicationController
     
     @render "sights/show"
     return true
+  
+  # filters
+  selectSight: ->
+    id = @params['id']
+    if id
+      Place.findOne({_id: id}).populate(['owner', 'tags']).exec (err, sight) =>
+        @sight = sight
+        @next()
+      return false
+    else
+      return true
 
 module.exports = SightsController
