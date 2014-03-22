@@ -1,8 +1,7 @@
 class BaseAbility
   
-  _abilities: { }
-  
   constructor: (model) ->
+    @_abilities = {}
     @intitalize(model)
   
   intitalize: ->
