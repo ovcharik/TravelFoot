@@ -51,7 +51,7 @@ define ['views/search/filters'], (FiltersView) ->
         success: (collection, resp, options) =>
           @trigger 'update_polygon', resp.polygon
           @unblockButton()
-        error: ->
+        error: =>
           @unblockButton()
     
     submit: ->
