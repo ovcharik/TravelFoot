@@ -26,8 +26,7 @@ queries = {
     "фонтан"
   ],
   place: [
-    "парк",
-    "кладбище"
+    "парк"
   ],
   religion: [
     "мечеть",
@@ -79,14 +78,17 @@ tagSchema.plugin findOrCreate
 
 Place = Mongoose.model 'Place', placeSchema
 User  = Mongoose.model 'User', userSchema
-Tag = Mongoose.model 'Tag', tagSchema
+Tag   = Mongoose.model 'Tag', tagSchema
 
+
+# functions
 querySearch = (queryStr, callback) ->
   options = _.clone requestOptions
   options.query = _.clone requestQuery
   options.query.text = queryStr
   
   url = URL.format options
+  console.log url
   
   HTTP.get url, (res) =>
     res.setEncoding 'utf8'
@@ -184,6 +186,7 @@ printInfo = ->
   console.log "done"
   Mongoose.connection.close()
 
+# main
 Mongoose.connect 'mongodb://localhost/travel_foot', (err) ->
   throw err if err
   

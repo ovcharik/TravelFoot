@@ -56,6 +56,7 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
       @markers = []
       @collection.each (sight) =>
         coord = sight.get('coord')
+        return true if not coord
         marker = new google.maps.Marker {
           position: new google.maps.LatLng(coord[1], coord[0]),
           map: @gmap,

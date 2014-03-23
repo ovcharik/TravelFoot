@@ -99,7 +99,7 @@ class BaseController extends Module
       exec = not (value.except or value.only)
       exec ||= value.except and not _.contains(value.except, @action)
       exec ||= value.only   and     _.contains(value.only, @action)
-      stack.push @[value.method].bind(@) if exec
+      stack.push @[value.method].bind(@) if @[value.method] and exec
     @
   
   _getControllerName = ->
