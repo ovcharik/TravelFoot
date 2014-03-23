@@ -3,7 +3,7 @@
 .body{style: "width: 300px"}
   %img{src: img, style: "float: left; margin:0 10px 10px 0"}
   %h5
-    a{href: "/sights/" + sight.get('_id')}
+    %a{href: "/sights/" + sight.get('_id')}
       = sight.get('name')
   %p
     = sight.get('description')
