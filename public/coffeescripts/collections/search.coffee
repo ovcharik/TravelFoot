@@ -7,4 +7,4 @@ define ['models/sight', 'collections/custom_fetch', 'collections/search'], (Sigh
     action: undefined
     
     url: ->
-      "/search/#{@action}?#{@params}"
+      "/search/#{@action}"

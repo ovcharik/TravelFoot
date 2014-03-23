@@ -1,3 +1,5 @@
+gpc = require './gpc'
+
 class Polygon
   
   @angle: (start, end) ->
@@ -42,7 +44,7 @@ class Polygon
     
     result
   
-  @createFromTwoPointAndRadius: (start, end, radius) ->
+  @createFromTwoPointAndRadius: (start, end, radius, close) ->
     angle = @angle start, end
     
     s = angle + Math.PI / 2
@@ -69,13 +71,51 @@ class Polygon
       for p in rArc
         result.push p
     
-    result.push result[0]
+    if close
+      result.push result[0]
     result
   
-  @createFromTwoPointAndRadiusDeg: (start, end, radius) ->
+  @createFromTwoPointAndRadiusDeg: (start, end, radius, close) ->
     converter = new Converter([start, end])
     flat = converter.getFlat()
-    polygon = @createFromTwoPointAndRadius(flat[0], flat[1], radius)
+    polygon = @createFromTwoPointAndRadius(flat[0], flat[1], radius, close)
     converter.fromFlat polygon
+  
+  @createFromPath: (path, radius, close) ->
+    polys = []
+    result = undefined
+    
+    i = 1
+    while i < path.length
+      curr = _gpcCreate(@createFromTwoPointAndRadius(path[i-1], path[i], radius))
+      if result
+        result = result.union(curr)
+      else
+        result = curr
+      i += 1
+    
+    result = _gpcToArray(result)
+    if close
+      result.push result[0]
+    result
+  
+  @createFromPathDeg: (path, radius, close) ->
+    converter = new Converter(path)
+    flat = converter.getFlat()
+    polygon = @createFromPath(flat, radius, close)
+    converter.fromFlat polygon
+  
+  _gpcCreate = (points) ->
+    result = new gpc.geometry.PolyDefault()
+    for p in points
+      result.addPoint new gpc.util.Point(p[0], p[1])
+    result
+  
+  _gpcToArray = (poly) ->
+    points = poly.getInnerPoly(0).getPoints()
+    result = []
+    for p in points
+      result.push [p.x, p.y]
+    result
 
 module.exports = Polygon

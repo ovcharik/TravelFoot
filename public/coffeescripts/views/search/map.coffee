@@ -137,6 +137,12 @@ define ['text!templates/search/marker.haml', 'views/search/map'], (marker_tpl, M
             @routeStates.end.setMap(null)   if @routeStates.end
             @routeStates.start = true
             @routeStates.end = true
+            path = @createPath result.routes[0].overview_path
+            @trigger 'change_path', path
+    
+    createPath: (path) ->
+      _.map path, (ll) ->
+        [ll.lng(), ll.lat()]
     
     drawPolygon: (points) ->
       if @polygon

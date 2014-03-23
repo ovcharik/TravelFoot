@@ -48,7 +48,8 @@ define [
       @$window.on 'resize', =>
         @onResize()
       
-      @mapView.on 'change_route', @filtersView.changeRoute, @filtersView
+      #@mapView.on 'change_route', @filtersView.changeRoute, @filtersView
+      @mapView.on 'change_path', @filtersView.changePath, @filtersView
       
       @filtersView.on 'update_polygon', @mapView.drawPolygon, @mapView
       @filtersView.on 'update_path', @mapView.setDirection, @mapView

@@ -11,6 +11,7 @@ html
     block stylesheets
     
     script(src="/javascripts/libs/jquery.min.js")
+    script(src="/javascripts/libs/jquery.serialize-object.min.js")
     script(src="/javascripts/libs/underscore.min.js")
     script(src="/javascripts/libs/bootstrap.min.js")
     script(src="/javascripts/libs/backbone.min.js")
@@ -20,6 +21,8 @@ html
     script(src="/javascripts/application.js")
     script(src="/javascripts/auth.js")
     script(src="/javascripts/links.js")
+    
+    //script(src="/javascripts/other/polygon.js")
     block javascripts
     
     title= title || (controller + '/' + action)

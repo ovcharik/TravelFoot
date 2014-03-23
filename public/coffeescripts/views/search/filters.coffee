@@ -3,9 +3,12 @@ define ['views/search/filters'], (FiltersView) ->
     
     el: "#search-form"
     tab: "a[href='#search']"
+    button: "#search-form button[type=submit]"
     
     initialize: (options) ->
       @collection = options.collection
+      
+      @$button = $(@button)
       
       @$tab = $(@tab)
       @$start = [
@@ -33,16 +36,23 @@ define ['views/search/filters'], (FiltersView) ->
         return false
     
     onSubmit: ->
-      params = @$el.serialize()
-      action = 'buffer'
+      @blockButton()
       
-      @collection.params = params
+      params = @$el.serializeObject()
+      if @path
+        params.path = @path
+      
+      action = 'buffer'
       @collection.action = action
       
       @collection.fetch
         modelsPath: 'models'
+        data: params
         success: (collection, resp, options) =>
           @trigger 'update_polygon', resp.polygon
+          @unblockButton()
+        error: ->
+          @unblockButton()
     
     submit: ->
       @$el.trigger 'submit'
@@ -57,3 +67,13 @@ define ['views/search/filters'], (FiltersView) ->
         @$end[0].val point[0]
         @$end[1].val point[1]
       @submit()
+    
+    changePath: (path) ->
+      @path = path
+      @submit()
+    
+    blockButton: ->
+      @$button.prop 'disabled', true
+    
+    unblockButton: ->
+      @$button.prop 'disabled', false

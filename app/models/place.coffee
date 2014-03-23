@@ -31,7 +31,11 @@ class Place extends BaseModel
     @schema.path('kind').enumValues
   
   @bufferSearch: (query, callback) ->
-    points = Polygon.createFromTwoPointAndRadiusDeg query.start, query.end, query.radius
+    points = []
+    if query.path
+      points = Polygon.createFromPathDeg query.path, query.radius, true
+    else
+      points = Polygon.createFromTwoPointAndRadiusDeg query.start, query.end, query.radius, true
     options = {
       kind : { $in: query.kinds },
       coord: { $geoWithin: { $geometry: { type: "Polygon", coordinates: [points] } } }
