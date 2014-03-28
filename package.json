@@ -18,7 +18,13 @@
     "bcrypt-nodejs": "~0.0.0"
   },
   
+  "devDependencies": {
+    "mocha": "~1.18.0",
+    "should": "~2.0.0"
+  },
+  
   "scripts": {
-    "start": "coffee index.coffee"
+    "start": "coffee index.coffee",
+    "test":  "make test"
   }
 }
